@@ -20,4 +20,10 @@ public class NPC extends Character {
 	public void aiMovement() {
 		
 	}
+
+	@Override
+	public SpriteId getSpriteId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

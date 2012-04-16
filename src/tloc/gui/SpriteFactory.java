@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.newdawn.slick.Image;
+
 import tloc.entities.IDisplayable;
 import tloc.entities.SpriteId;
 
@@ -16,7 +18,7 @@ import tloc.entities.SpriteId;
  */
 public class SpriteFactory {
 	
-	private static final Map<SpriteId, BufferedImage> spriteMap = new HashMap<>();
+	private static final Map<SpriteId, Image> spriteMap = new HashMap<>();
 	static {
 		try {
 			for (SpriteId spriteId : SpriteId.values()) {
@@ -27,17 +29,17 @@ public class SpriteFactory {
 		}
 	}
 	
-	public BufferedImage getSprite(IDisplayable displayable) {
+	public Image getSprite(IDisplayable displayable) {
 		return spriteMap.get(displayable);
 	}
 
-	private static BufferedImage loadSprite(SpriteId spriteId) throws IOException {
+	private static Image loadSprite(SpriteId spriteId) throws IOException {
 		ClassLoader classLoader = SpriteFactory.class.getClassLoader();
 		String resName = SpriteFactory.class.getPackage().getName().replace('.', '/') + "/" + spriteId.toString() + ".png";
-		URL url = classLoader.getResource(resName);
-		if (url == null) {
+//		String url = classLoader.getResource(resName);
+		if (resName == null) {
 			throw new IllegalStateException("Missing resource: " + resName);
 		}
-		return ImageIO.read(url);
+		return new Image(resName);
 	}
 }

@@ -42,10 +42,10 @@ public class GameController {
 			game.getPlayer().setxDirection(-1);
 		}
 		if (command == Command.MOVEUP) {
-			game.getPlayer().setyDirection(-1);
+			game.getPlayer().setyDirection(1);
 		} 
 		if (command == Command.MOVEDOWN) {
-			game.getPlayer().setyDirection(1);
+			game.getPlayer().setyDirection(-1);
 		}
 		if (command == Command.JUMP) {
 			game.getPlayer().jump();

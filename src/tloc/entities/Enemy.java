@@ -19,4 +19,10 @@ public class Enemy extends Character {
 	public void avoidPlayer() {
 		
 	}
+
+	@Override
+	public SpriteId getSpriteId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

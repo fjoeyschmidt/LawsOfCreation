@@ -6,11 +6,12 @@ package tloc.entities;
 
 public class Movement {
 	//move
-	public static void moveCharacter(Character c) {
+	public static void moveCharacter(Character c, Area area) {
 		if ( c.getCharacterLocation() != null ) {
 			int x = c.getCharacterLocation().getxLocation() + (c.getxDirection() * c.getSpeed());
 			int y = c.getCharacterLocation().getyLocation() + (c.getyDirection() * c.getSpeed());
 			Location z = new Location(x, y);
+			z = Area.outOfBounds(area, z);
 			c.setCharacterLocation(z);
 		}
 	}

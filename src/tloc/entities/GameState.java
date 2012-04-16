@@ -20,7 +20,7 @@ public class GameState extends Observable {
 	
 	//constructor
 	public GameState() {
-		currentArea = new SubArea(HEIGHT, WIDTH);
+		currentArea = new SubArea(340, 800);
 		player = new Player();
 		player.setCharacterLocation(new Location(100, 300));
 		setPlayer(player);
@@ -32,7 +32,7 @@ public class GameState extends Observable {
 		//call functions to move Characters
 			Iterator<Character> iter = entities.iterator();
 			while (iter.hasNext()) {
-				iter.next().move();
+				iter.next().move(currentArea);
 			}
 	}
 	
@@ -72,5 +72,9 @@ public class GameState extends Observable {
 
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
+	}
+	
+	public List<Character> getEntityList() {
+		return entities;
 	}
 }

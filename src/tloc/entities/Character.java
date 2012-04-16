@@ -11,7 +11,7 @@ package tloc.entities;
  * is assigned.
  */
 
-public abstract class Character {
+public abstract class Character implements IDisplayable {
 	
 	//standard character fields
 	private CharacterProperties properties;
@@ -31,8 +31,8 @@ public abstract class Character {
 	}
 	
 	//move method
-	public void move() {
-		Movement.moveCharacter(this);
+	public void move(Area area) {
+		Movement.moveCharacter(this, area);
 	}
 	
 	//jump method
