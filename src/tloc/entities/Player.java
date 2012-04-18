@@ -54,4 +54,6 @@ public class Player extends Character implements IDisplayable {
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}
+
+	
 }

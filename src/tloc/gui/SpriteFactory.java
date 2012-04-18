@@ -1,14 +1,10 @@
 package tloc.gui;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 import tloc.entities.IDisplayable;
 import tloc.entities.SpriteId;
@@ -18,28 +14,31 @@ import tloc.entities.SpriteId;
  */
 public class SpriteFactory {
 	
+	//maps a spriteid to an image
 	private static final Map<SpriteId, Image> spriteMap = new HashMap<>();
 	static {
 		try {
 			for (SpriteId spriteId : SpriteId.values()) {
 				spriteMap.put(spriteId, loadSprite(spriteId));
 			}
-		} catch (IOException e) {
+		} catch (SlickException e) {
 			throw new IllegalStateException("Error loading sprite resources", e);
 		}
 	}
 	
-	public Image getSprite(IDisplayable displayable) {
+	//takes an entity and gets an entity from the sprite map
+	public static Image getSprite(IDisplayable displayable) {
 		return spriteMap.get(displayable);
 	}
-
-	private static Image loadSprite(SpriteId spriteId) throws IOException {
-		ClassLoader classLoader = SpriteFactory.class.getClassLoader();
-		String resName = SpriteFactory.class.getPackage().getName().replace('.', '/') + "/" + spriteId.toString() + ".png";
-//		String url = classLoader.getResource(resName);
-		if (resName == null) {
-			throw new IllegalStateException("Missing resource: " + resName);
+	
+	//loads and returns the sprite
+	private static Image loadSprite(SpriteId spriteId) throws SlickException {
+		String resName = SpriteFactory.class.getPackage().getName().replace('.', '/') + "/res/" + spriteId.toString() + ".png";
+		System.out.println(resName);
+		try {
+			return new Image(resName);
+		} catch (SlickException e) {
+			throw new IllegalStateException("Invalid sprite resource", e);
 		}
-		return new Image(resName);
 	}
 }

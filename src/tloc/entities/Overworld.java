@@ -7,4 +7,9 @@ public class Overworld extends Area {
 	public Overworld(int height, int width) {
 		super(height, width);
 	}
+	
+	@Override
+	public SpriteId getSpriteId() {
+		return SpriteId.OVERWORLD;
+	}
 }

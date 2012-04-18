@@ -4,7 +4,7 @@ package tloc.entities;
  * the player will visit.
  */
 
-public abstract class Area {
+public abstract class Area implements IDisplayable {
 	private Location grid[][];
 	private static int height, width;
 	

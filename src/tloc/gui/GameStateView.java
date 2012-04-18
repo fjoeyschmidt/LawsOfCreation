@@ -36,8 +36,8 @@ public class GameStateView extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		game = new GameState();
 		Controls.newControls();
-		area = new Image("tloc/gui/res/LAND.png");
-		playerSprite = new Image("tloc/gui/res/PLAYER.png");
+		area = SpriteFactory.getSprite(game.getCurrentArea());
+		playerSprite = SpriteFactory.getSprite(game.getPlayer());
 	}
 	
 	//render gui objects method
@@ -47,15 +47,15 @@ public class GameStateView extends BasicGame {
 		//draw area
 		area.draw(0, 0);
 		
-		//get all characters
-		entities = game.getEntityList();
-		Iterator<Character> charIter = entities.iterator();
-		
-		//get sprite for each character and then draw each character
-		while (charIter.hasNext()) {
-			Character tempChar = charIter.next();
-			
-		}
+//		//get all characters
+//		entities = game.getEntityList();
+//		Iterator<Character> charIter = entities.iterator();
+//		
+//		//get sprite for each character and then draw each character
+//		while (charIter.hasNext()) {
+//			Character tempChar = charIter.next();
+//			Image tempSprite = SpriteFactory.getSprite(tempChar);
+//		}
 		
 		
 		int playerHeight = playerSprite.getHeight();

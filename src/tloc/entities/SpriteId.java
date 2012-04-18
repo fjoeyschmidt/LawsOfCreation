@@ -2,5 +2,6 @@ package tloc.entities;
 
 public enum SpriteId {
 	PLAYER,
-	LAND;
+	LAND,
+	OVERWORLD;
 }
