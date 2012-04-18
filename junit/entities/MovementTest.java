@@ -9,7 +9,9 @@ import tloc.entities.Character;
 import tloc.entities.CharacterSpace;
 import tloc.entities.Enemy;
 import tloc.entities.Location;
+import tloc.entities.Movement;
 import tloc.entities.Structure;
+import tloc.entities.SubArea;
 
 public class MovementTest {
 	
@@ -56,7 +58,7 @@ public class MovementTest {
 		e.setSpeed(3);
 		e.setxDirection(1);
 		e.setyDirection(1);
-		e.move();
+		Movement.moveCharacter(e, new SubArea(40, 40));
 		
 		assertTrue(e.isMoving());
 		assertTrue(Location.sameLocation(new Location(4, 4),
