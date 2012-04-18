@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -29,10 +30,10 @@ public class GameStateView extends BasicGame {
 	private static GameState game;
 	private final int WIDTH = 800, HEIGHT = 600;
 	private static List<Character> entities;
-	private Map<Character, Image> sprites = new HashMap<Character, Image>();
+	private Map<Character, Animation> sprites = new HashMap<Character, Animation>();
 	private Character character;
 	private Image area;
-	private Image sprite;
+	private Animation sprite;
 	private float scale = 1.0f;
 	
 	//initialize game Objects
