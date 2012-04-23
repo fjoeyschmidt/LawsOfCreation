@@ -1,7 +1,9 @@
 package tloc.gui;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -25,10 +27,10 @@ public class GameStateView extends BasicGame {
 	}
 	
 	private static GameState game;
-	private final int WIDTH = 800, HEIGHT = 600;
+	private final int HEIGHT = 600;
 	private static List<Character> entities;
+	private static Map<Character, Image> spriteMap = new HashMap<>();
 	private Image area;
-	private Image playerSprite;
 	private float scale = 1.0f;
 	
 	//initialize game Objects
@@ -36,8 +38,21 @@ public class GameStateView extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		game = new GameState();
 		Controls.newControls();
+		entities = game.getEntityList();
+		
+		//get image for area
 		area = SpriteFactory.getSprite(game.getCurrentArea());
-		playerSprite = SpriteFactory.getSprite(game.getPlayer());
+		
+		//get images for each entity
+		Iterator<Character> entityIter = entities.iterator();
+		while (entityIter.hasNext()) {
+			Character currentChar = entityIter.next();
+			spriteMap.put(currentChar, SpriteFactory.getSprite(currentChar));
+			
+			//set height and width properties of character to reflect sprite size
+			currentChar.getProperties().setHeight(spriteMap.get(currentChar).getHeight());
+			currentChar.getProperties().setWidth(spriteMap.get(currentChar).getWidth());
+		}
 	}
 	
 	//render gui objects method
@@ -47,22 +62,14 @@ public class GameStateView extends BasicGame {
 		//draw area
 		area.draw(0, 0);
 		
-//		//get all characters
-//		entities = game.getEntityList();
-//		Iterator<Character> charIter = entities.iterator();
-//		
-//		//get sprite for each character and then draw each character
-//		while (charIter.hasNext()) {
-//			Character tempChar = charIter.next();
-//			Image tempSprite = SpriteFactory.getSprite(tempChar);
-//		}
-		
-		
-		int playerHeight = playerSprite.getHeight();
-		playerHeight = playerHeight - game.getPlayer().getProperties().getHeight();
-		int playerWidth = game.getPlayer().getProperties().getWidth();
-		playerSprite.draw(playerWidth + game.getPlayer().getCharacterLocation().getxLocation(), 
-				HEIGHT - playerHeight - game.getPlayer().getCharacterLocation().getyLocation(), scale);
+		//for each character draw their sprite
+		Iterator<Character> entityIter = entities.iterator();
+		while (entityIter.hasNext()) {
+			Character currentChar = entityIter.next();
+			int charHeight = spriteMap.get(currentChar).getHeight();
+			spriteMap.get(currentChar).draw(currentChar.getCharacterLocation().getxLocation(),
+					HEIGHT - charHeight - currentChar.getCharacterLocation().getyLocation(), scale);
+		}
 	}
 	
 	//update gamestate method

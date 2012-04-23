@@ -1,5 +1,9 @@
 package tloc.entities;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
+
 /** Abstract superclass for all characters
  * including Player, Enemy, Boss and NPC.
  * The fields are fields that will change frequently
@@ -21,6 +25,7 @@ public abstract class Character implements IDisplayable {
 	private CharacterSpace spaceTaken;
 	private Location characterLocation;  //bottom left corner
 	private boolean isJumping = false;
+	private Queue<Location> moveQueue = new LinkedList<Location>();
 	
 	public Character(int health, int dam, int def, int spd, int h, int w, int jH) {
 		currentHealth = health;
@@ -140,8 +145,15 @@ public abstract class Character implements IDisplayable {
 	public boolean isMoving() {
 		if (this.xDirection == 0 && this.yDirection == 0) {
 			return false;
-		} else {
-			return true;
 		}
+		return true;
+	}
+
+	public Queue<Location> getMoveQueue() {
+		return moveQueue;
+	}
+
+	public void setMoveQueue(Queue<Location> moveQ) {
+		moveQueue = moveQ;
 	}
 }
