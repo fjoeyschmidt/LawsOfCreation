@@ -6,8 +6,8 @@ package tloc.entities;
 
 public class Enemy extends Character {
 
-	public Enemy(int health, int dam, int def, int spd, int h, int w, int jH) {
-		super(health, dam, def, spd, h, w, jH);
+	public Enemy(String name, int health, int dam, int def, int spd, int h, int w, int jH) {
+		super(name, health, dam, def, spd, h, w, jH);
 	}
 	
 	//attack player
@@ -18,11 +18,5 @@ public class Enemy extends Character {
 	//avoid player
 	public void avoidPlayer() {
 		
-	}
-
-	@Override
-	public SpriteId getSpriteId() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

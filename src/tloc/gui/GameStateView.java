@@ -28,12 +28,12 @@ public class GameStateView extends BasicGame {
 	}
 	
 	private static GameState game;
-	private final int WIDTH = 800, HEIGHT = 600;
+	private final int HEIGHT = 600;
 	private static List<Character> entities;
 	private Map<Character, Animation> sprites = new HashMap<Character, Animation>();
-	private Character character;
+	private static Map<Character, Image> spriteMap = new HashMap<>();
 	private Image area;
-	private Animation sprite;
+	private Image sprite;
 	private float scale = 1.0f;
 	
 	//initialize game Objects
@@ -41,17 +41,22 @@ public class GameStateView extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		game = new GameState();
 		Controls.newControls();
-		new SpriteFactory();
+		entities = game.getEntityList();
+		
+		//get image for area
 		area = SpriteFactory.getSprite(game.getCurrentArea());
 		
 		//get all characters
 		entities = game.getEntityList();
 		Iterator<Character> charIter = entities.iterator();
-		//map characters to sprites
+		//map character animations with characters
 		while (charIter.hasNext()) {
-			character = charIter.next();
-			sprite = SpriteFactory.getSprite(character);
-			sprites.put(character, sprite);
+			Character currentChar = charIter.next();
+			sprites.put(currentChar, CharacterAnimationFactory.loadAnimation(currentChar));
+			
+			//set height and width properties of character to reflect sprite size
+			currentChar.getProperties().setHeight(sprites.get(currentChar).getHeight());
+			currentChar.getProperties().setWidth(sprites.get(currentChar).getWidth());
 		}
 	}
 	
@@ -63,15 +68,23 @@ public class GameStateView extends BasicGame {
 		area.draw(0, 0);
 
 		//get sprite for each character and then draw each character
-		Iterator<Character> charIter = entities.iterator();
-		while (charIter.hasNext()) {
-			sprite = sprites.get(charIter.next());
-			int height = sprite.getHeight();
-			height = height - character.getProperties().getHeight();
-			int width = character.getProperties().getWidth();
-			sprite.draw(width + character.getCharacterLocation().getxLocation(),
-					HEIGHT - height - character.getCharacterLocation().getyLocation(),
-					scale);
+//		Iterator<Character> charIter = entities.iterator();
+//		while (charIter.hasNext()) {
+//			sprite = sprites.get(charIter.next());
+//			int height = sprite.getHeight();
+//			height = height - character.getProperties().getHeight();
+//			int width = character.getProperties().getWidth();
+//			sprite.draw(width + character.getCharacterLocation().getxLocation(),
+//					HEIGHT - height - character.getCharacterLocation().getyLocation(),
+//					scale);
+		
+		//for each character draw their sprite
+		Iterator<Character> entityIter = entities.iterator();
+		while (entityIter.hasNext()) {
+			Character currentChar = entityIter.next();
+			int charHeight = sprites.get(currentChar).getHeight();
+			spriteMap.get(currentChar).draw(currentChar.getCharacterLocation().getxLocation(),
+					HEIGHT - charHeight - currentChar.getCharacterLocation().getyLocation(), scale);
 		}
 	}
 	

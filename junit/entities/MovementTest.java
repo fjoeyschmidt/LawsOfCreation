@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import tloc.entities.Area;
 import tloc.entities.Character;
 import tloc.entities.CharacterSpace;
 import tloc.entities.Enemy;
@@ -46,9 +47,9 @@ public class MovementTest {
 	
 	@Before
 	public void setUp() {
-		e = new Enemy(ehealth, edamage, edefense, espeed, eheight, ewidth, ejumpHeight);
+		e = new Enemy("enemy", ehealth, edamage, edefense, espeed, eheight, ewidth, ejumpHeight);
 		e.setCharacterLocation(enemyLocation);
-		p = new Enemy(phealth, pdamage, pdefense, pspeed, pheight, pwidth, pjumpHeight);
+		p = new Enemy("player", phealth, pdamage, pdefense, pspeed, pheight, pwidth, pjumpHeight);
 	}
 
 	// movement test
@@ -58,7 +59,7 @@ public class MovementTest {
 		e.setSpeed(3);
 		e.setxDirection(1);
 		e.setyDirection(1);
-		Movement.moveCharacter(e, new SubArea(40, 40));
+		Movement.moveCharacter(e, new SubArea(100, 100));
 		
 		assertTrue(e.isMoving());
 		assertTrue(Location.sameLocation(new Location(4, 4),
