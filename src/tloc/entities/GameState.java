@@ -20,7 +20,7 @@ public class GameState extends Observable {
 	
 	//constructor
 	public GameState() {
-		currentArea = new SubArea(340, 800);
+		currentArea = new SubArea(330, 760);
 		player = new Player();
 		player.setCharacterLocation(new Location(100, 300));
 		setPlayer(player);

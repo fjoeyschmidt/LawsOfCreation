@@ -85,9 +85,8 @@ public class GameStateView extends BasicGame {
 			sprite = CharacterAnimationFactory.loadAnimation(currentChar);
 			int charHeight = sprites.get(currentChar).getHeight();
 			charHeight = charHeight - currentChar.getProperties().getHeight();
-			int width = currentChar.getProperties().getWidth();
-			sprite.draw(width + currentChar.getCharacterLocation().getxLocation(),
-					HEIGHT - charHeight - currentChar.getCharacterLocation().getyLocation());
+			sprite.draw(currentChar.getCharacterLocation().getxLocation(),
+					HEIGHT - currentChar.getProperties().getHeight() - currentChar.getCharacterLocation().getyLocation());
 		}
 	}
 	

@@ -22,7 +22,7 @@ public abstract class Character {
 	private CharacterProperties properties;
 	private int currentHealth;
 	private int damage, defense, speed;
-	private int xDirection = 0, yDirection = 0;
+	private int facingDirection = 1, xDirection = 0, yDirection = 0;
 	private CharacterSpace spaceTaken;
 	private Location characterLocation;  //bottom left corner
 	private boolean isJumping = false;
@@ -96,6 +96,9 @@ public abstract class Character {
 
 	public void setxDirection(int xDirection) {
 		this.xDirection = xDirection;
+		if (xDirection != 0) {
+			this.facingDirection = xDirection;
+		}
 	}
 
 	public int getyDirection() {
@@ -165,5 +168,13 @@ public abstract class Character {
 
 	public void setCharacterName(String characterName) {
 		this.characterName = characterName;
+	}
+
+	public int getFacingDirection() {
+		return facingDirection;
+	}
+
+	public void setFacingDirection(int facingDirection) {
+		this.facingDirection = facingDirection;
 	}
 }

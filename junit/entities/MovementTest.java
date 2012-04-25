@@ -66,29 +66,30 @@ public class MovementTest {
 				e.getCharacterLocation()));
 		assertTrue(e.getSpaceTaken().sameSpace(
 				new CharacterSpace(new Location(4, 4), 2, 2)));
+		assertEquals(1, e.getFacingDirection());
+		
+		e.setxDirection(-1);
+		
+		assertTrue(e.isMoving());
+		assertEquals(-1, e.getFacingDirection());
 	}
-
 	// jump test
 	@Test
 	public void testJump() throws Exception {
 		// standing still
 		e.jump();
-		assertTrue(e.getSpaceTaken().sameSpace(espace));
-		assertFalse(e.isMoving());
-
-		// moving right
+		for (int i = 0; i < e.getProperties().getJumpHeight() * 2; i++) {
+			Movement.moveCharacter(e, null);
+		}
+		assertTrue(Location.sameLocation(e.getCharacterLocation(), enemyLocation));
+		
 		e.setxDirection(1);
 		e.jump();
-		assertTrue(e.getSpaceTaken().sameSpace(
-				new CharacterSpace(new Location(21, 1), 2, 2)));
-		assertTrue(e.isMoving());
-
-		// moving left
-		e.setCharacterLocation(new Location(30, 3));
-		e.setxDirection(-1);
-		e.jump();
-		assertTrue(e.getSpaceTaken().sameSpace(
-				new CharacterSpace(new Location(10, 3), 2, 2)));
-		assertTrue(e.isMoving());
+		int i;
+		for (i = 0; i < e.getProperties().getJumpHeight() * 2; i++) {
+			Movement.moveCharacter(e, null);
+		}
+		
+		assertTrue(Location.sameLocation(new Location( (((e.getxDirection() * e.getSpeed())*i)+1) , 1), e.getCharacterLocation()));
 	}
 }

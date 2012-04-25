@@ -11,17 +11,32 @@ import org.newdawn.slick.SpriteSheet;
 import tloc.entities.Character;
 
 public class CharacterAnimationFactory {
-	private static Map<String, Animation> stillAnimationMap = new HashMap<String, Animation>();
-	private static Map<String, Animation> movingAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> stillLeftAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> stillRightAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> movingLeftAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> movingRightAnimationMap = new HashMap<String, Animation>();
 	
 	//loads and returns the sprite
 
 	public static Animation loadAnimation(Character c) throws SlickException {
-		Animation a;
+		Animation a = null;
 		if (c.isMoving()) {
-			a = getAnimation(c, movingAnimationMap);
+			if (c.getFacingDirection() < 0) {
+				a = getAnimation(c, movingLeftAnimationMap);
+			}
+			if (c.getFacingDirection() > 0) {
+				a = getAnimation(c, movingRightAnimationMap);
+			}
 		} else {
-			a = getAnimation(c, stillAnimationMap);
+			if (c.getFacingDirection() < 0) {
+				a = getAnimation(c, stillLeftAnimationMap);
+			}
+			if (c.getFacingDirection() > 0) {
+				a = getAnimation(c, stillRightAnimationMap);
+			}
+		}
+		if (a == null) {
+			throw new SlickException("a is null");
 		}
 		return a;
 	}
@@ -49,7 +64,10 @@ public class CharacterAnimationFactory {
 			charFrames[1] = charSheet.getSubImage(0, 1);
 			charFrames[2] = charSheet.getSubImage(1, 0);
 			charFrames[3] = charSheet.getSubImage(1, 1);
-			charAnim = new Animation(charFrames, 1);
+			if (c.getFacingDirection() <= 0) {
+				charFrames = getFlipped(c, charFrames);
+			}
+			charAnim = new Animation(charFrames, 120);
 		}
 		if( !c.isMoving() ){
 			resName = CharacterAnimationFactory.class.getPackage().getName().replace('.', '/') + "/res/" 
@@ -57,11 +75,21 @@ public class CharacterAnimationFactory {
 			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
 			Image[] charFrames = new Image[1];
 			charFrames[0] = charSheet.getSubImage(0, 0);
+			if (c.getFacingDirection() <= 0) {
+				charFrames = getFlipped(c, charFrames);
+			}
 			charAnim = new Animation(charFrames, 10);
 		}
 		if(charAnim == null) {
 			throw new SlickException("Animation is null");
 		}
 		return charAnim;
+	}
+
+	private static Image[] getFlipped(Character c, Image[] charFrames) {
+		for (int i = 0; i < charFrames.length; i++) {
+			charFrames[i] = charFrames[i].getFlippedCopy(true, false);
+		}
+		return charFrames;
 	}	
 }

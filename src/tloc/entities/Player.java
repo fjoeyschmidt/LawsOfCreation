@@ -16,7 +16,7 @@ public class Player extends Character {
 	private static final int startingSpeed = 2;
 	private static final int height = 2;
 	private static final int width = 2;
-	private static final int startingJumpHeight = 2;
+	private static final int startingJumpHeight = 25;
 	private List<Ability> abilities = new ArrayList<Ability>();
 	
 	public Player() {
