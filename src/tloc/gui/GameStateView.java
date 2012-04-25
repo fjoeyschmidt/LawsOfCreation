@@ -33,7 +33,7 @@ public class GameStateView extends BasicGame {
 	private Map<Character, Animation> sprites = new HashMap<Character, Animation>();
 	private static Map<Character, Image> spriteMap = new HashMap<>();
 	private Image area;
-	private Image sprite;
+	private Animation sprite;
 	private float scale = 1.0f;
 	
 	//initialize game Objects
@@ -82,9 +82,12 @@ public class GameStateView extends BasicGame {
 		Iterator<Character> entityIter = entities.iterator();
 		while (entityIter.hasNext()) {
 			Character currentChar = entityIter.next();
+			sprite = CharacterAnimationFactory.loadAnimation(currentChar);
 			int charHeight = sprites.get(currentChar).getHeight();
-			spriteMap.get(currentChar).draw(currentChar.getCharacterLocation().getxLocation(),
-					HEIGHT - charHeight - currentChar.getCharacterLocation().getyLocation(), scale);
+			charHeight = charHeight - currentChar.getProperties().getHeight();
+			int width = currentChar.getProperties().getWidth();
+			sprite.draw(width + currentChar.getCharacterLocation().getxLocation(),
+					HEIGHT - charHeight - currentChar.getCharacterLocation().getyLocation());
 		}
 	}
 	
