@@ -31,6 +31,11 @@ public class GameController {
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			handleCommand(Controls.getCommand(Input.KEY_SPACE), game);
 		}
+		
+		//check if input is attack
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			handleCommand(Controls.getCommand(Input.MOUSE_LEFT_BUTTON), game);
+		}
 	}
 	
 	//takes a command and calls player methods accordingly
@@ -49,7 +54,10 @@ public class GameController {
 		}
 		if (command == Command.JUMP) {
 			game.getPlayer().jump();
-			game.getPlayer().setIsJumping(true);
+		}
+		if (command == Command.ATTACK) {
+			game.getPlayer().attack();
+			
 		}
 	}
 }

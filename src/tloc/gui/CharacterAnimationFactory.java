@@ -97,6 +97,18 @@ public class CharacterAnimationFactory {
 			}
 			charAnim = new Animation(charFrames, 10);
 		}
+		if( c.isAttacking() ) {
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
+			Image[] charFrames = new Image[2];
+			charFrames[0] = charSheet.getSubImage(0, 7);
+			charFrames[1] = charSheet.getSubImage(0, 8);
+			System.out.println("attacked");
+			if (c.getFacingDirection() <= 0) {
+				charFrames = getFlipped(c, charFrames);
+			}
+			charAnim = new Animation(charFrames, 120);
+		}
+		
 		if(charAnim == null) {
 			throw new SlickException("Animation is null");
 		}

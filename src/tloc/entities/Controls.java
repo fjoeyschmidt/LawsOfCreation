@@ -15,6 +15,7 @@ public class Controls {
 		controlMap.put(Command.MOVELEFT, Input.KEY_A);
 		controlMap.put(Command.MOVERIGHT, Input.KEY_D);
 		controlMap.put(Command.JUMP, Input.KEY_SPACE);
+		controlMap.put(Command.ATTACK, Input.MOUSE_LEFT_BUTTON);
 	}
 	
 	//returns command based off int value
@@ -33,6 +34,9 @@ public class Controls {
 		}
 		if (input == controlMap.get(Command.JUMP)) {
 			return Command.JUMP;
+		}
+		if (input == controlMap.get(Command.ATTACK)) {
+			return Command.ATTACK;
 		}
 		return null;
 	}
@@ -80,5 +84,13 @@ public class Controls {
 	public void setJump(int jump) {
 		controlMap.remove(Command.JUMP);
 		controlMap.put(Command.JUMP, jump);
+	}
+	public int getAttack() {
+		return controlMap.get(Command.ATTACK);
+	}
+
+	public void setAttack(int attack) {
+		controlMap.remove(Command.ATTACK);
+		controlMap.put(Command.ATTACK, attack);
 	}
 }

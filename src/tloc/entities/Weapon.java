@@ -8,6 +8,12 @@ public class Weapon extends Item {
 	private int weaponDamage;
 	private int range;
 	
+	public Weapon(String name, int damage, int range) {
+		this.setName(name);
+		this.setRange(range);
+		this.setWeaponDamage(damage);
+	}
+	
 	//Getters and Setters
 	public int getWeaponDamage() {
 		return weaponDamage;

@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class Player extends Character {
-	private Weapon weapon;
+	
 	private static final int startingHealth = 100;
 	private static final int startingDamage = 10;
 	private static final int startingDefense = 0;
@@ -21,6 +21,7 @@ public class Player extends Character {
 	
 	public Player() {
 		super("Ridley", startingHealth, startingDamage, startingDefense, startingSpeed, height, width, startingJumpHeight);
+		setWeapon(new Weapon("Starter", 5, 5));
 	}
 	
 	//sprint method
@@ -40,14 +41,6 @@ public class Player extends Character {
 
 	public void setAbilities(List<Ability> abilities) {
 		this.abilities = abilities;
-	}
-	
-	public Weapon getWeapon() {
-		return weapon;
-	}
-
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
 	}
 
 	
