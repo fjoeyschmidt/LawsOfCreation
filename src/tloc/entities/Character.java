@@ -25,7 +25,7 @@ public abstract class Character {
 	private int facingDirection = 1, xDirection = 0, yDirection = 0;
 	private CharacterSpace spaceTaken;
 	private Location characterLocation;  //bottom left corner
-	private boolean isJumping = false;
+	private boolean isJumping;
 	private Queue<Location> moveQueue = new LinkedList<Location>();
 	
 	public Character(String name, int health, int dam, int def, int spd, int h, int w, int jH) {
@@ -134,7 +134,7 @@ public abstract class Character {
 		this.isJumping = isJumping;
 	}
 	
-	public boolean getIsJumping() {
+	public boolean isJumping() {
 		return this.isJumping;
 	}
 

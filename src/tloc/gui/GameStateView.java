@@ -31,10 +31,8 @@ public class GameStateView extends BasicGame {
 	private final int HEIGHT = 600;
 	private static List<Character> entities;
 	private Map<Character, Animation> sprites = new HashMap<Character, Animation>();
-	private static Map<Character, Image> spriteMap = new HashMap<>();
 	private Image area;
 	private Animation sprite;
-	private float scale = 1.0f;
 	
 	//initialize game Objects
 	@Override
@@ -66,17 +64,6 @@ public class GameStateView extends BasicGame {
 			throws SlickException {
 		//draw area
 		area.draw(0, 0);
-
-		//get sprite for each character and then draw each character
-//		Iterator<Character> charIter = entities.iterator();
-//		while (charIter.hasNext()) {
-//			sprite = sprites.get(charIter.next());
-//			int height = sprite.getHeight();
-//			height = height - character.getProperties().getHeight();
-//			int width = character.getProperties().getWidth();
-//			sprite.draw(width + character.getCharacterLocation().getxLocation(),
-//					HEIGHT - height - character.getCharacterLocation().getyLocation(),
-//					scale);
 		
 		//for each character draw their sprite
 		Iterator<Character> entityIter = entities.iterator();

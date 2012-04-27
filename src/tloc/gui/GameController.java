@@ -49,6 +49,7 @@ public class GameController {
 		}
 		if (command == Command.JUMP) {
 			game.getPlayer().jump();
+			game.getPlayer().setIsJumping(true);
 		}
 	}
 }

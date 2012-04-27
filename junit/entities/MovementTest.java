@@ -80,6 +80,7 @@ public class MovementTest {
 		e.jump();
 		for (int i = 0; i < e.getProperties().getJumpHeight() * 2; i++) {
 			Movement.moveCharacter(e, null);
+			assertTrue(e.isJumping());
 		}
 		assertTrue(Location.sameLocation(e.getCharacterLocation(), enemyLocation));
 		
@@ -88,6 +89,7 @@ public class MovementTest {
 		int i;
 		for (i = 0; i < e.getProperties().getJumpHeight() * 2; i++) {
 			Movement.moveCharacter(e, null);
+			assertTrue(e.isJumping());
 		}
 		
 		assertTrue(Location.sameLocation(new Location( (((e.getxDirection() * e.getSpeed())*i)+1) , 1), e.getCharacterLocation()));

@@ -1,8 +1,5 @@
 package tloc.entities;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Stack;
@@ -25,7 +22,6 @@ public class Movement {
 				z = Area.outOfBounds(area, z);
 				c.setCharacterLocation(z);
 			} else {
-				c.setIsJumping(true);
 				c.setCharacterLocation(c.getMoveQueue().remove());
 			}
 		}
@@ -33,7 +29,7 @@ public class Movement {
 
 	//jump
 	public static void jumpCharacter(Character c) {
-		if (!c.getIsJumping()){ 
+		if (!c.isJumping()){
 			int x = c.getCharacterLocation().getxLocation();
 			int y = c.getCharacterLocation().getyLocation();
 			Queue<Location> moveQ = new LinkedList<Location>();

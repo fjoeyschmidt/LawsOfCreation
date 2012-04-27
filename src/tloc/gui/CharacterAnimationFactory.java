@@ -15,11 +15,21 @@ public class CharacterAnimationFactory {
 	private static Map<String, Animation> stillRightAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> movingLeftAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> movingRightAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> jumpingLeftAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> jumpingRightAnimationMap = new HashMap<String, Animation>();
 	
 	//loads and returns the sprite
 
 	public static Animation loadAnimation(Character c) throws SlickException {
 		Animation a = null;
+		if (c.isJumping()) {
+			if (c.getFacingDirection() < 0) {
+				a = getAnimation(c, jumpingLeftAnimationMap);
+			}
+			if (c.getFacingDirection() > 0) {
+				a = getAnimation(c, jumpingRightAnimationMap);
+			}
+		}
 		if (c.isMoving()) {
 			if (c.getFacingDirection() < 0) {
 				a = getAnimation(c, movingLeftAnimationMap);
@@ -54,24 +64,31 @@ public class CharacterAnimationFactory {
 	
 	private static Animation _loadAnimation(Character c) throws SlickException {
 		Animation charAnim = null;
-		String resName;
+		String resName = CharacterAnimationFactory.class.getPackage().getName().replace('.', '/') + "/res/" 
+				+ c.getCharacterName() + "Sheet.png";;
+		if ( c.isJumping() ) {
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
+			Image[] charFrames = new Image[2];
+			charFrames[0] = charSheet.getSubImage(0, 5);
+			charFrames[1] = charSheet.getSubImage(0, 6);
+			if (c.getFacingDirection() <= 0 ) {
+				charFrames = getFlipped(c, charFrames);
+			}
+			charAnim = new Animation(charFrames, 10 * c.getProperties().getJumpHeight());
+		}
 		if( c.isMoving() ) {
-			resName = CharacterAnimationFactory.class.getPackage().getName().replace('.', '/') + "/res/" 
-					+ c.getCharacterName() + "MoveSheet.png";
 			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
 			Image[] charFrames = new Image[4];
-			charFrames[0] = charSheet.getSubImage(1, 0);
+			charFrames[0] = charSheet.getSubImage(0, 2);
 			charFrames[1] = charSheet.getSubImage(0, 1);
-			charFrames[2] = charSheet.getSubImage(1, 0);
-			charFrames[3] = charSheet.getSubImage(1, 1);
+			charFrames[2] = charSheet.getSubImage(0, 3);
+			charFrames[3] = charSheet.getSubImage(0, 1);
 			if (c.getFacingDirection() <= 0) {
 				charFrames = getFlipped(c, charFrames);
 			}
 			charAnim = new Animation(charFrames, 120);
 		}
 		if( !c.isMoving() ){
-			resName = CharacterAnimationFactory.class.getPackage().getName().replace('.', '/') + "/res/" 
-					+ c.getCharacterName() + "MoveSheet.png";
 			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
 			Image[] charFrames = new Image[1];
 			charFrames[0] = charSheet.getSubImage(0, 0);
