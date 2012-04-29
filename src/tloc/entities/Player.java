@@ -16,15 +16,13 @@ public class Player extends Character {
 	private static final int startingSpeed = 2;
 	private static final int height = 2;
 	private static final int width = 2;
-	private static final int startingJumpHeight = 25;
+	private static final int startingJumpHeight = 100;
 	private List<Ability> abilities = new ArrayList<Ability>();
 	
 	public Player() {
 		super("Ridley", startingHealth, startingDamage, startingDefense, startingSpeed, height, width, startingJumpHeight);
 		setWeapon(new Weapon("Starter", 5, 5));
 	}
-	
-	
 	
 	//sprint method
 	public void sprint() {

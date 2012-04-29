@@ -79,20 +79,24 @@ public class MovementTest {
 	public void testJump() throws Exception {
 		// standing still
 		e.jump();
-		for (int i = 0; i < e.getProperties().getJumpHeight() * 2; i++) {
-			Movement.moveCharacter(e, null);
-			assertTrue(e.isJumping());
+		assertTrue(e.isJumping());
+		while (e.isJumping()) {
+			e.move(null);
 		}
-		assertTrue(Location.sameLocation(e.getCharacterLocation(), enemyLocation));
+		assertTrue(Location.sameLocation(enemyLocation, e.getCharacterLocation()));
+		assertFalse(e.isJumping());
 		
+		int counter = 0;
 		e.setxDirection(1);
 		e.jump();
-		int i;
-		for (i = 0; i < e.getProperties().getJumpHeight() * 2; i++) {
-			Movement.moveCharacter(e, null);
-			assertTrue(e.isJumping());
+		assertTrue(e.isJumping());
+		while (e.isJumping()) {
+			e.move(null);
+			counter++;
+			e.setyDirection(1);
 		}
-		
-		assertTrue(Location.sameLocation(new Location( (((e.getxDirection() * e.getSpeed())*i)+1) , 1), e.getCharacterLocation()));
+		assertTrue(Location.sameLocation(new Location(enemyLocation.getxLocation() + (counter * e.getSpeed()), 
+				enemyLocation.getyLocation()), e.getCharacterLocation()));
+		assertFalse(e.isJumping());
 	}
 }

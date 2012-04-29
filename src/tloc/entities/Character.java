@@ -23,9 +23,9 @@ public abstract class Character {
 	private CharacterProperties properties;
 	private int currentHealth;
 	private int damage, defense, speed;
-	private int facingDirection = 1, xDirection = 0, yDirection = 0;
+	private int facingDirection = 1, xDirection = 0, yDirection = 0, jumpDirection = 0;
 	private Space spaceTaken;
-	private Location characterLocation;  //top left corner
+	private Location characterLocation, jumpingLocation;  //top left corner
 	private boolean isJumping, isAttacking;
 	private Queue<Location> moveQueue = new LinkedList<Location>();
 	
@@ -41,12 +41,14 @@ public abstract class Character {
 	//move method
 	public void move(Area area) {
 		Movement.moveCharacter(this, area);
-		
 	}
 	
 	//jump method
 	public void jump() {
-		Movement.jumpCharacter(this);
+		if ( !(this.isJumping()) ) { 
+			this.setJumpingLocation(this.getCharacterLocation());
+			setIsJumping(true);
+		}
 	}
 	
 	//attack method
@@ -191,5 +193,21 @@ public abstract class Character {
 
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
+	}
+
+	public Location getJumpingLocation() {
+		return jumpingLocation;
+	}
+
+	public void setJumpingLocation(Location jumpingLocation) {
+		this.jumpingLocation = jumpingLocation;
+	}
+
+	public int getJumpDirection() {
+		return jumpDirection;
+	}
+
+	public void setJumpDirection(int jumpDirection) {
+		this.jumpDirection = jumpDirection;
 	}
 }
