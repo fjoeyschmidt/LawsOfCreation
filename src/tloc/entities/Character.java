@@ -24,7 +24,7 @@ public abstract class Character {
 	private int currentHealth;
 	private int damage, defense, speed;
 	private int facingDirection = 1, xDirection = 0, yDirection = 0;
-	private CharacterSpace spaceTaken;
+	private Space spaceTaken;
 	private Location characterLocation;  //top left corner
 	private boolean isJumping, isAttacking;
 	private Queue<Location> moveQueue = new LinkedList<Location>();
@@ -41,6 +41,7 @@ public abstract class Character {
 	//move method
 	public void move(Area area) {
 		Movement.moveCharacter(this, area);
+		
 	}
 	
 	//jump method
@@ -111,7 +112,7 @@ public abstract class Character {
 		this.yDirection = yDirection;
 	}
 
-	public CharacterSpace getSpaceTaken() {
+	public Space getSpaceTaken() {
 		return spaceTaken;
 	}
 
@@ -125,11 +126,7 @@ public abstract class Character {
 	}
 
 	private void setCharacterSpace() {
-		if (this.spaceTaken == null) {
-			this.spaceTaken = new CharacterSpace(this.getCharacterLocation(), this.properties.getHeight(), this.properties.getWidth());
-		} else {
-			this.spaceTaken.changeSpace(this);
-		}
+		this.spaceTaken = Space.getCharacterSpace(this);
 	}
 
 	public void setIsJumping(boolean isJumping) {

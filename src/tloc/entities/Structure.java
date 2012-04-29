@@ -6,7 +6,7 @@ package tloc.entities;
  */
 
 public class Structure {
-	private Location structureLocation; //bottom left corner
+	private Location structureLocation; //top left corner
 	private int height, width;
 	private Space structureSpace;
 	

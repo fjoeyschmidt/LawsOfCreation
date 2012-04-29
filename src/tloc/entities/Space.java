@@ -12,19 +12,25 @@ import java.util.List;
  */
 
 public class Space {
-	protected Location bottomLeft, topRight;
+	protected Location topLeft, bottomRight;
 	
 	public Space(Location loc, int height, int width) {
 		int topX, topY;
-		bottomLeft = loc;
-		topX = bottomLeft.getxLocation() + width;
-		topY = bottomLeft.getyLocation() + height;
+		topLeft = loc;
+		topX = topLeft.getxLocation() + width;
+		topY = topLeft.getyLocation() + height;
 		setTopRight(new Location(topX, topY));
+	}
+	
+	public static Space getCharacterSpace(Character c) {
+		Space charSpace = new Space(c.getCharacterLocation(), c.getProperties().getHeight(), 
+				c.getProperties().getWidth());
+		return charSpace;
 	}
 	
 	//check two Spaces to see if they're the same
 	public boolean sameSpace(Space compare) {
-		if (Location.sameLocation(compare.getBottomLeft(), this.bottomLeft) &&
+		if (Location.sameLocation(compare.getBottomLeft(), this.topLeft) &&
 				Location.sameLocation(compare.getTopRight(), this.getTopRight())) {
 			return true;
 		} else {
@@ -59,19 +65,14 @@ public class Space {
 	 */
 	public static void checkCollision(Character c, Space compare) {
 		Space space;
-		int height = c.getProperties().getHeight();
-		int width = c.getProperties().getWidth();
-		int x = c.getCharacterLocation().getxLocation() + (c.getxDirection() * c.getSpeed());
-		int y = c.getCharacterLocation().getyLocation() + (c.getyDirection() * c.getSpeed());
-		
 		//check collision left and right
-		space = new CharacterSpace(new Location(x, c.getCharacterLocation().getyLocation()), height, width);
+		space = getCharacterSpace(c);
 		if (checkOverlap(space, compare)) {
 			c.setxDirection(0);
 		}
 		
 		//check collision up and down
-		space = new CharacterSpace(new Location(c.getCharacterLocation().getxLocation(), y), height, width);
+		space = getCharacterSpace(c);
 		if (checkOverlap(space, compare)) {
 			c.setyDirection(0);
 		}
@@ -79,21 +80,21 @@ public class Space {
 	
 	//return a list of locations on the perimeter of space
 	private static List<Location> perimeter(Space s) {
-		int width = s.topRight.getxLocation() - s.bottomLeft.getxLocation();
-		int height = s.topRight.getyLocation() - s.bottomLeft.getyLocation();
+		int width = s.bottomRight.getxLocation() - s.topLeft.getxLocation();
+		int height = s.bottomRight.getyLocation() - s.topLeft.getyLocation();
 		List<Location> list = new ArrayList<Location>();
 		Location loc;
 		
 		for (int i = 0; i < width; i++) {
-			loc = new Location(s.bottomLeft.getxLocation() + i, s.bottomLeft.getyLocation());
+			loc = new Location(s.topLeft.getxLocation() + i, s.topLeft.getyLocation());
 			list.add(loc);
-			loc = new Location(s.bottomLeft.getxLocation() + i, s.bottomLeft.getyLocation() + height);
+			loc = new Location(s.topLeft.getxLocation() + i, s.topLeft.getyLocation() + height);
 			list.add(loc);
 		}
 		for (int i = 0; i < height; i++) {
-			loc = new Location(s.bottomLeft.getxLocation(), s.bottomLeft.getyLocation() + i);
+			loc = new Location(s.topLeft.getxLocation(), s.topLeft.getyLocation() + i);
 			list.add(loc);
-			loc = new Location(s.bottomLeft.getxLocation() + width, s.bottomLeft.getyLocation() + i);
+			loc = new Location(s.topLeft.getxLocation() + width, s.topLeft.getyLocation() + i);
 			list.add(loc);
 		}
 		
@@ -102,18 +103,18 @@ public class Space {
 
 	//Getters and Setters
 	public Location getBottomLeft() {
-		return bottomLeft;
+		return topLeft;
 	}
 
 	public void setBottomLeft(Location bottomLeft) {
-		this.bottomLeft = bottomLeft;
+		this.topLeft = bottomLeft;
 	}
 
 	public Location getTopRight() {
-		return topRight;
+		return bottomRight;
 	}
 
 	public void setTopRight(Location topRight) {
-		this.topRight = topRight;
+		this.bottomRight = topRight;
 	}
 }

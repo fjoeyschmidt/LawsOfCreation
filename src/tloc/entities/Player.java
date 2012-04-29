@@ -1,4 +1,4 @@
-package tloc.entities;
+ package tloc.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,8 @@ public class Player extends Character {
 		super("Ridley", startingHealth, startingDamage, startingDefense, startingSpeed, height, width, startingJumpHeight);
 		setWeapon(new Weapon("Starter", 5, 5));
 	}
+	
+	
 	
 	//sprint method
 	public void sprint() {

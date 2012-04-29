@@ -6,9 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import tloc.entities.Character;
-import tloc.entities.CharacterSpace;
 import tloc.entities.Enemy;
 import tloc.entities.Location;
+import tloc.entities.Space;
 
 public class CharacterTest {
 	private Character e;
@@ -20,12 +20,13 @@ public class CharacterTest {
 	private int width = 2;
 	private int jumpHeight = 5;
 	private Location enemyLocation = new Location(1, 1);
-	private CharacterSpace space = new CharacterSpace(new Location(1, 1), 2, 2);
+	private Space space;
 	
 	@Before
 	public void setUp() {
 		e = new Enemy("enemy", health, damage, defense, speed, height, width, jumpHeight);
 		e.setCharacterLocation(enemyLocation);
+		space = Space.getCharacterSpace(e);
 	}
 	
 	//basic character test
@@ -69,6 +70,6 @@ public class CharacterTest {
 		assertEquals(1, e.getxDirection());
 		assertEquals(-1, e.getyDirection());
 		assertTrue(Location.sameLocation(new Location(3, 4), e.getCharacterLocation()));
-		assertTrue(e.getSpaceTaken().sameSpace(new CharacterSpace(new Location(3, 4), 3, 6)));
+		assertTrue(e.getSpaceTaken().sameSpace(new Space(new Location(3, 4), 3, 6)));
 	}
 }

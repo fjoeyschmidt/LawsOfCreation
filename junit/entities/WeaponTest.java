@@ -14,7 +14,7 @@ public class WeaponTest {
 	
 	@Before
 	public void setUp() {
-		w = new Weapon();
+		w = new Weapon("TestWeapon", 5, 5);
 		w.setWeaponDamage(damage);
 		w.setRange(range);
 	}

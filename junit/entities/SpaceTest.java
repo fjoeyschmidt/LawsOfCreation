@@ -68,7 +68,7 @@ public class SpaceTest {
 			Movement.moveCharacter(p, new SubArea(100, 100));
 		}
 		assertTrue(Location.sameLocation(p.getCharacterLocation(),
-				new Location(18, 30)));
+				new Location(19, 30)));
 
 		// collision left
 		p.setCharacterLocation(new Location(50, 30));
@@ -79,7 +79,7 @@ public class SpaceTest {
 			Movement.moveCharacter(p, new SubArea(100,100));
 		}
 		assertTrue(Location.sameLocation(p.getCharacterLocation(),
-				new Location(41, 30)));
+				new Location(40, 30)));
 
 		// collision up
 		p.setCharacterLocation(new Location(30, 0));
@@ -90,7 +90,7 @@ public class SpaceTest {
 			Movement.moveCharacter(p, new SubArea(100,100));
 		}
 		assertTrue(Location.sameLocation(p.getCharacterLocation(),
-				new Location(30, 18)));
+				new Location(30, 19)));
 
 		// collision down
 		p.setCharacterLocation(new Location(30, 50));
@@ -101,6 +101,6 @@ public class SpaceTest {
 			Movement.moveCharacter(p, new SubArea(100,100));
 		}
 		assertTrue(Location.sameLocation(p.getCharacterLocation(),
-				new Location(30, 41)));
+				new Location(30, 40)));
 	}
 }

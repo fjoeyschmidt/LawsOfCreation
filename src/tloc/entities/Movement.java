@@ -26,10 +26,40 @@ public class Movement {
 			}
 		}
 	}
-
+/*
+	public static void jumpCharacter(Character c) {
+		
+		if(!c.isJumping()) {
+			
+			c.setIsJumping(true);
+			float jumpSpeed = 2;
+			int x = c.getCharacterLocation().getxLocation();
+			int y = c.getCharacterLocation().getyLocation();
+			Queue<Location> moveQ = new LinkedList<Location>();
+			Stack<Integer> yLocations = new Stack<Integer>();
+		
+			int jumpInt = c.getProperties().getJumpHeight();
+			for(int i=0; i < jumpInt; i++) {
+				yLocations.add(y);
+				x = x + (c.getxDirection() * c.getSpeed());
+				y = (int) (y + (jumpSpeed));
+				moveQ.add(new Location(x, y));
+				jumpSpeed = jumpSpeed/2;
+			}
+			while (!yLocations.empty()) {
+				x = x + (c.getxDirection() * c.getSpeed());
+				moveQ.add(new Location(x, yLocations.pop()));
+			}
+			c.setMoveQueue(moveQ);
+		}
+		c.setIsJumping(false);
+	}
+	*/
+	
 	//jump
 	public static void jumpCharacter(Character c) {
 		if (!c.isJumping()){
+			c.setIsJumping(true);
 			int x = c.getCharacterLocation().getxLocation();
 			int y = c.getCharacterLocation().getyLocation();
 			Queue<Location> moveQ = new LinkedList<Location>();
@@ -37,10 +67,12 @@ public class Movement {
 			//jump up
 			for (int i = 0; i < c.getProperties().getJumpHeight(); i++) {
 				yLocations.add(y);
+				moveQ.add(new Location(x, y));
 				x = x + (c.getxDirection() * c.getSpeed());
 				y = y + (c.getProperties().getJumpHeight()/5);
-				moveQ.add(new Location(x, y));
-			}
+				
+			}	
+
 			//fall down
 			while (!yLocations.empty()) {
 				x = x + (c.getxDirection() * c.getSpeed());
@@ -49,4 +81,5 @@ public class Movement {
 			c.setMoveQueue(moveQ);
 		}
 	}
+	
 }

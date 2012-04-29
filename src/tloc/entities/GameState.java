@@ -17,6 +17,7 @@ public class GameState extends Observable {
 	private Area currentArea;
 	private Player player;
 	private static List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
+	private Combat combat = new Combat(this);
 	
 	//constructor
 	public GameState() {
