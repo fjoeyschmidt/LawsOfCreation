@@ -15,22 +15,30 @@ public class CharacterAnimationFactory {
 	private static Map<String, Animation> stillRightAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> movingLeftAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> movingRightAnimationMap = new HashMap<String, Animation>();
-	private static Map<String, Animation> jumpingLeftAnimationMap = new HashMap<String, Animation>();
-	private static Map<String, Animation> jumpingRightAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> jumpingUpLeftAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> jumpingUpRightAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> jumpingDownLeftAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> jumpingDownRightAnimationMap = new HashMap<String, Animation>();
 	
 	//loads and returns the sprite
 
 	public static Animation loadAnimation(Character c) throws SlickException {
 		Animation a = null;
+		
 		if (c.isJumping()) {
-			if (c.getFacingDirection() < 0) {
-				a = getAnimation(c, jumpingLeftAnimationMap);
+			if (c.getFacingDirection() < 0 && c.getJumpDirection() > 0) {
+				a = getAnimation(c, jumpingUpLeftAnimationMap);
 			}
-			if (c.getFacingDirection() > 0) {
-				a = getAnimation(c, jumpingRightAnimationMap);
+			if (c.getFacingDirection() > 0 && c.getJumpDirection() > 0) {
+				a = getAnimation(c, jumpingUpRightAnimationMap);
 			}
-		}
-		if (c.isMoving()) {
+			if (c.getFacingDirection() < 0 && c.getJumpDirection() < 0) {
+				a = getAnimation(c, jumpingDownLeftAnimationMap);
+			}
+			if (c.getFacingDirection() > 0 && c.getJumpDirection() < 0) {
+				a = getAnimation(c, jumpingDownRightAnimationMap);
+			}
+		} else if (c.isMoving()) {
 			if (c.getFacingDirection() < 0) {
 				a = getAnimation(c, movingLeftAnimationMap);
 			}
@@ -66,17 +74,7 @@ public class CharacterAnimationFactory {
 		Animation charAnim = null;
 		String resName = CharacterAnimationFactory.class.getPackage().getName().replace('.', '/') + "/res/" 
 				+ c.getCharacterName() + "Sheet.png";;
-		if ( c.isJumping() ) {
-			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
-			Image[] charFrames = new Image[2];
-			charFrames[0] = charSheet.getSubImage(0, 5);
-			charFrames[1] = charSheet.getSubImage(0, 6);
-			if (c.getFacingDirection() <= 0 ) {
-				charFrames = getFlipped(c, charFrames);
-			}
-			charAnim = new Animation(charFrames, 10 * c.getProperties().getJumpHeight());
-		}
-		if( c.isMoving() ) {
+		if ( c.isMoving() ) {
 			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
 			Image[] charFrames = new Image[4];
 			charFrames[0] = charSheet.getSubImage(0, 2);
@@ -96,6 +94,24 @@ public class CharacterAnimationFactory {
 				charFrames = getFlipped(c, charFrames);
 			}
 			charAnim = new Animation(charFrames, 10);
+		}
+		if ( c.getJumpDirection() > 0 ) {
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
+			Image[] charFrames = new Image[1];
+			charFrames[0] = charSheet.getSubImage(0, 5);
+			if (c.getFacingDirection() <= 0 ) {
+				charFrames = getFlipped(c, charFrames);
+			}
+			charAnim = new Animation(charFrames, 10 * c.getProperties().getJumpHeight());
+		}
+		if ( c.getJumpDirection() < 0 ) {
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
+			Image[] charFrames = new Image[1];
+			charFrames[0] = charSheet.getSubImage(0, 6);
+			if (c.getFacingDirection() <= 0 ) {
+				charFrames = getFlipped(c, charFrames);
+			}
+			charAnim = new Animation(charFrames, 10 * c.getProperties().getJumpHeight());
 		}
 		if( c.isAttacking() ) {
 			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);

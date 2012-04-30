@@ -57,7 +57,6 @@ public class GameController {
 		}
 		if (command == Command.ATTACK) {
 			game.getPlayer().attack();
-			
 		}
 	}
 }

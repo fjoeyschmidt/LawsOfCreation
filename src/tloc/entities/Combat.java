@@ -6,15 +6,9 @@ import java.util.List;
 
 /** Class with static methods to handle combat */
 public class Combat {
-	
-	private static GameState game;
-	public Combat(GameState g) {
-		game = g;
-	}
 
-	public static void attack(Character c) {
+	public static void attack(Character c, List<Character> entities) {
 		Space attackGrid;
-		List<Character> entities = game.getEntityList();
 		//if character is facing left find the Space to the left
 		if(c.getFacingDirection() < 0) {
 			attackGrid = new Space(new Location(c.getCharacterLocation().getxLocation() - c.getWeapon().getRange(), c.getCharacterLocation().getyLocation()),
@@ -25,17 +19,27 @@ public class Combat {
 					c.getProperties().getHeight(), c.getWeapon().getRange());
 		}
 		
+		checkHit(c, attackGrid, entities);
+	}
+
+	private static void checkHit(Character c, Space attackGrid, List<Character> entities) {
+		
 		//check to see if any entities in gamestate are within the attackGrid
 		Iterator<Character> charIter = entities.iterator();
 		while (charIter.hasNext()) {
 			Character check = charIter.next();
 			if ( !(check == c) ) {
+				int damage = c.getWeapon().getWeaponDamage() + c.getDamage() - check.getDefense();
 				//true for weapon hit damage character
 				if ( Space.checkOverlap(attackGrid, Space.getCharacterSpace(check)) ) {
-					check.setCurrentHealth(check.getCurrentHealth() - c.getWeapon().getWeaponDamage());
+					if ( damage < 0 ) {
+						damage = 0;
+					}
+					check.setCurrentHealth(check.getCurrentHealth() - damage);
 				}
 			}
 		}
+		c.setIsAttacking(false);
 	}
 
 	public static void block(Character c) {

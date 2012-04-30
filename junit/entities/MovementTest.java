@@ -74,6 +74,7 @@ public class MovementTest {
 		assertTrue(e.isMoving());
 		assertEquals(-1, e.getFacingDirection());
 	}
+	
 	// jump test
 	@Test
 	public void testJump() throws Exception {

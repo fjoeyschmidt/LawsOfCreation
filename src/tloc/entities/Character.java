@@ -1,8 +1,5 @@
 package tloc.entities;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 
 /** Abstract superclass for all characters
  * including Player, Enemy, Boss and NPC.
@@ -27,7 +24,6 @@ public abstract class Character {
 	private Space spaceTaken;
 	private Location characterLocation, jumpingLocation;  //top left corner
 	private boolean isJumping, isAttacking;
-	private Queue<Location> moveQueue = new LinkedList<Location>();
 	
 	public Character(String name, int health, int dam, int def, int spd, int h, int w, int jH) {
 		setCharacterName(name);
@@ -53,7 +49,6 @@ public abstract class Character {
 	
 	//attack method
 	public void attack() {
-		Combat.attack(this);
 		this.setIsAttacking(true);
 	}
 	
@@ -161,14 +156,6 @@ public abstract class Character {
 			return false;
 		}
 		return true;
-	}
-
-	public Queue<Location> getMoveQueue() {
-		return moveQueue;
-	}
-
-	public void setMoveQueue(Queue<Location> moveQ) {
-		moveQueue = moveQ;
 	}
 
 	public String getCharacterName() {

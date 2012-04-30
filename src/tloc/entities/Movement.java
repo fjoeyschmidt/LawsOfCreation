@@ -1,9 +1,5 @@
 package tloc.entities;
 
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Stack;
-
 
 /** A class containing static methods that handle
  * the movement of a character. Includes jumping.

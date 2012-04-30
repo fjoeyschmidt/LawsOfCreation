@@ -17,8 +17,7 @@ public class GameState extends Observable {
 	private Area currentArea;
 	private Player player;
 	private static List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
-	private Combat combat = new Combat(this);
-	
+
 	//constructor
 	public GameState() {
 		currentArea = new SubArea(330, 760);
@@ -27,21 +26,38 @@ public class GameState extends Observable {
 		setPlayer(player);
 		gameOver = false;
 	}
-	
+
 	//updates game state
 	public void update() {
+		checkDead();
 		//call functions to move Characters
-			Iterator<Character> iter = entities.iterator();
-			while (iter.hasNext()) {
-				iter.next().move(currentArea);
+		Iterator<Character> iter = entities.iterator();
+		while (iter.hasNext()) {
+			Character c = iter.next();
+			if (c.isAttacking()) {
+				Combat.attack(c, GameState.getEntityList());
+			} else {
+				c.move(currentArea);
 			}
+		}
 	}
-	
+
+	private void checkDead() {
+		Iterator<Character> iter = entities.iterator();
+		while (iter.hasNext()) {
+			Character c = iter.next();
+			if (c.getCurrentHealth() <= 0) {
+				entities.remove(c);
+			}
+		}
+
+	}
+
 	//add a new character to game state
 	public static void addCharacter(Character c) {
 		entities.add(c);
 	}
-		
+
 	//getters and setters	
 	public static int getWidth() {
 		return WIDTH;
@@ -74,8 +90,8 @@ public class GameState extends Observable {
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
-	
-	public List<Character> getEntityList() {
+
+	public static List<Character> getEntityList() {
 		return entities;
 	}
 }
