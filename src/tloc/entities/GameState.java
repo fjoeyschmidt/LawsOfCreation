@@ -16,6 +16,7 @@ public class GameState extends Observable {
 	private boolean gameOver;
 	private Area currentArea;
 	private Player player;
+	//private Enemy enemy1;
 	private static List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
 
 	//constructor
@@ -24,12 +25,13 @@ public class GameState extends Observable {
 		player = new Player();
 		player.setCharacterLocation(new Location(100, 300));
 		setPlayer(player);
+		//enemy1 = new Enemy("Karn", 500, 2, 2, 2, 10, 10, 0);
 		gameOver = false;
 	}
 
 	//updates game state
 	public void update() {
-		checkDead();
+		
 		//call functions to move Characters
 		Iterator<Character> iter = entities.iterator();
 		while (iter.hasNext()) {
@@ -42,16 +44,7 @@ public class GameState extends Observable {
 		}
 	}
 
-	private void checkDead() {
-		Iterator<Character> iter = entities.iterator();
-		while (iter.hasNext()) {
-			Character c = iter.next();
-			if (c.getCurrentHealth() <= 0) {
-				entities.remove(c);
-			}
-		}
-
-	}
+	
 
 	//add a new character to game state
 	public static void addCharacter(Character c) {

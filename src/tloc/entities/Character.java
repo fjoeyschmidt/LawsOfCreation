@@ -50,6 +50,7 @@ public abstract class Character {
 	//attack method
 	public void attack() {
 		this.setIsAttacking(true);
+		System.out.println("attacked");
 	}
 	
 	//block method

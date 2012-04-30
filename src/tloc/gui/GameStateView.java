@@ -78,6 +78,9 @@ public class GameStateView extends BasicGame {
 			} else {
 				sprite.draw(currentChar.getCharacterLocation().getxLocation(),
 						HEIGHT - currentChar.getProperties().getHeight() - currentChar.getCharacterLocation().getyLocation());
+				if(currentChar.isAttacking()) {
+					currentChar.setIsAttacking(false);
+				}
 			}
 		}
 	}
@@ -91,5 +94,6 @@ public class GameStateView extends BasicGame {
 
 		//updates game state
 		game.update();
+		
 	}
 }

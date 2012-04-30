@@ -1,5 +1,6 @@
 package tloc.entities;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,6 +10,7 @@ public class Combat {
 
 	public static void attack(Character c, List<Character> entities) {
 		Space attackGrid;
+		
 		//if character is facing left find the Space to the left
 		if(c.getFacingDirection() < 0) {
 			attackGrid = new Space(new Location(c.getCharacterLocation().getxLocation() - c.getWeapon().getRange(), c.getCharacterLocation().getyLocation()),
@@ -26,6 +28,7 @@ public class Combat {
 		
 		//check to see if any entities in gamestate are within the attackGrid
 		Iterator<Character> charIter = entities.iterator();
+		List<Character> deadGuys = new ArrayList<Character>();
 		while (charIter.hasNext()) {
 			Character check = charIter.next();
 			if ( !(check == c) ) {
@@ -36,10 +39,15 @@ public class Combat {
 						damage = 0;
 					}
 					check.setCurrentHealth(check.getCurrentHealth() - damage);
+					if(check.getCurrentHealth() <= 0) {
+						deadGuys.add(check);
+					}
 				}
 			}
 		}
-		c.setIsAttacking(false);
+		
+		entities.removeAll(deadGuys);
+		
 	}
 
 	public static void block(Character c) {

@@ -19,13 +19,23 @@ public class CharacterAnimationFactory {
 	private static Map<String, Animation> jumpingUpRightAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> jumpingDownLeftAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> jumpingDownRightAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> attackingRightAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> attackingLeftAnimationMap = new HashMap<String, Animation>();
 	
 	//loads and returns the sprite
 
 	public static Animation loadAnimation(Character c) throws SlickException {
 		Animation a = null;
-		
-		if (c.isJumping()) {
+		if (c.isAttacking()) {
+			if (c.getFacingDirection() < 0) {
+				a = getAnimation(c, attackingLeftAnimationMap);
+			}
+			if (c.getFacingDirection() > 0) {
+				a = getAnimation(c, attackingRightAnimationMap);
+			}
+			
+		}
+		else if (c.isJumping()) {
 			if (c.getFacingDirection() < 0 && c.getJumpDirection() > 0) {
 				a = getAnimation(c, jumpingUpLeftAnimationMap);
 			}
@@ -118,11 +128,11 @@ public class CharacterAnimationFactory {
 			Image[] charFrames = new Image[2];
 			charFrames[0] = charSheet.getSubImage(0, 7);
 			charFrames[1] = charSheet.getSubImage(0, 8);
-			System.out.println("attacked");
+			
 			if (c.getFacingDirection() <= 0) {
 				charFrames = getFlipped(c, charFrames);
 			}
-			charAnim = new Animation(charFrames, 120);
+			charAnim = new Animation(charFrames, 160);
 		}
 		
 		if(charAnim == null) {
