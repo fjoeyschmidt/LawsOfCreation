@@ -9,7 +9,6 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Graphics;
 
@@ -39,13 +38,13 @@ public class GameStateView extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		game = new GameState();
 		Controls.newControls();
-		entities = game.getEntityList();
+		entities = GameState.getEntityList();
 
 		//get image for area
 		area = SpriteFactory.getSprite(game.getCurrentArea());
 
 		//get all characters
-		entities = game.getEntityList();
+		entities = GameState.getEntityList();
 		Iterator<Character> charIter = entities.iterator();
 		//map character animations with characters
 		while (charIter.hasNext()) {
@@ -88,12 +87,13 @@ public class GameStateView extends BasicGame {
 	//update gamestate method
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
-		Input input = gc.getInput();
+		gc.getInput();
 		//call method handler for player input
-		GameController.handleInput(input, game);
+		GameController.handleInput(gc.getInput(), game);
 
 		//updates game state
 		game.update();
+		
 		
 	}
 }

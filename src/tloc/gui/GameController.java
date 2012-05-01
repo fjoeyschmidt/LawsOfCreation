@@ -1,14 +1,17 @@
 package tloc.gui;
 
 import org.newdawn.slick.Input;
-
 import tloc.entities.Command;
 import tloc.entities.Controls;
 import tloc.entities.GameState;
 
 public class GameController {
 	
+	
+	
 	public static void handleInput(Input input, GameState game) {
+		
+		
 		//check if input is to move up or down
 		if (input.isKeyDown(Input.KEY_S)) {
 			handleCommand(Controls.getCommand(Input.KEY_S), game);
@@ -59,4 +62,6 @@ public class GameController {
 			game.getPlayer().attack();
 		}
 	}
+
+	
 }

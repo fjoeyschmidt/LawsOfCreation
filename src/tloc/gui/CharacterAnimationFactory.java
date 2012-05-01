@@ -133,6 +133,7 @@ public class CharacterAnimationFactory {
 				charFrames = getFlipped(c, charFrames);
 			}
 			charAnim = new Animation(charFrames, 160);
+			
 		}
 		
 		if(charAnim == null) {
