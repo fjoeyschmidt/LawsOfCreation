@@ -16,7 +16,7 @@ public class GameState extends Observable {
 	private boolean gameOver;
 	private Area currentArea;
 	private Player player;
-	//private Enemy enemy1;
+	private Enemy[] enemies = new Enemy[5];
 	private static List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
 
 	//constructor
@@ -25,7 +25,17 @@ public class GameState extends Observable {
 		player = new Player();
 		player.setCharacterLocation(new Location(100, 300));
 		setPlayer(player);
-		//enemy1 = new Enemy("Karn", 500, 2, 2, 2, 10, 10, 0);
+		for(int i = 0; i < 5; i++) {
+			enemies[i] = new Enemy("Karn", 100, i, 2, 2, 10, 10, 0, "60x90");
+			enemies[i].setCharacterLocation(new Location(600, (i*50)));
+			enemies[i].setFacingDirection(-1);
+		}
+		for(int i = 0; i < 5; i++) {
+			Enemy enemy = enemies[i];
+			addCharacter(enemy);
+		}
+		
+		
 		gameOver = false;
 	}
 
@@ -36,10 +46,13 @@ public class GameState extends Observable {
 		Iterator<Character> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Character c = iter.next();
+			
 			if (c.isAttacking()) {
 				Combat.attack(c, GameState.getEntityList());
 			} else {
 				c.move(currentArea);
+				
+				//^look into this^ as possible reason for attack animations failing 
 			}
 		}
 	}

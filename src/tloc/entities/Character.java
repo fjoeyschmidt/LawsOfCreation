@@ -24,14 +24,16 @@ public abstract class Character {
 	private Space spaceTaken;
 	private Location characterLocation, jumpingLocation;  //top left corner
 	private boolean isJumping, isAttacking;
+	private String SpriteSize;
 	
-	public Character(String name, int health, int dam, int def, int spd, int h, int w, int jH) {
+	public Character(String name, int health, int dam, int def, int spd, int h, int w, int jH, String sS) {
 		setCharacterName(name);
 		currentHealth = health;
 		damage = dam;
 		defense = def;
 		speed = spd;
 		properties = new CharacterProperties(h, w, jH, health);
+		setSpriteSize(sS);
 	}
 	
 	//move method
@@ -197,5 +199,13 @@ public abstract class Character {
 
 	public void setJumpDirection(int jumpDirection) {
 		this.jumpDirection = jumpDirection;
+	}
+
+	public String getSpriteSize() {
+		return SpriteSize;
+	}
+
+	public void setSpriteSize(String spriteSize) {
+		SpriteSize = spriteSize;
 	}
 }

@@ -19,12 +19,13 @@ public class CharacterTest {
 	private int height = 2;
 	private int width = 2;
 	private int jumpHeight = 5;
+	private String sS = "30x30";
 	private Location enemyLocation = new Location(1, 1);
 	private Space space;
 	
 	@Before
 	public void setUp() {
-		e = new Enemy("enemy", health, damage, defense, speed, height, width, jumpHeight);
+		e = new Enemy("enemy", health, damage, defense, speed, height, width, jumpHeight, sS);
 		e.setCharacterLocation(enemyLocation);
 		space = Space.getCharacterSpace(e);
 	}

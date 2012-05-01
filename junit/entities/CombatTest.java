@@ -21,7 +21,7 @@ public class CombatTest {
 		game = new GameState();
 		player = game.getPlayer();
 		enemy1 = new Enemy("enemy1", startingHealth, startingDamage, startingDefense, 1, 
-				player.getProperties().getHeight(), player.getProperties().getWidth(), 20);
+				player.getProperties().getHeight(), player.getProperties().getWidth(), 20, "60x90");
 		GameState.addCharacter(enemy1);
 	}
 

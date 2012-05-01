@@ -26,7 +26,7 @@ public class MovementTest {
 	private int ejumpHeight = 5;
 	private Location enemyLocation = new Location(1, 1);
 	private Space espace;
-	
+	private String sS = "30x30";
 	private int phealth = 30;
 	private int pdamage = 2;
 	private int pdefense = 1;
@@ -47,10 +47,10 @@ public class MovementTest {
 	
 	@Before
 	public void setUp() {
-		e = new Enemy("enemy", ehealth, edamage, edefense, espeed, eheight, ewidth, ejumpHeight);
+		e = new Enemy("enemy", ehealth, edamage, edefense, espeed, eheight, ewidth, ejumpHeight, sS);
 		e.setCharacterLocation(enemyLocation);
 		espace = Space.getCharacterSpace(e);
-		p = new Enemy("player", phealth, pdamage, pdefense, pspeed, pheight, pwidth, pjumpHeight);
+		p = new Enemy("player", phealth, pdamage, pdefense, pspeed, pheight, pwidth, pjumpHeight, sS);
 	}
 
 	// movement test
@@ -96,6 +96,7 @@ public class MovementTest {
 			counter++;
 			e.setyDirection(1);
 		}
+		System.out.println(e.getCharacterLocation().getyLocation() + " " + enemyLocation.getyLocation());
 		assertTrue(Location.sameLocation(new Location(enemyLocation.getxLocation() + (counter * e.getSpeed()), 
 				enemyLocation.getyLocation()), e.getCharacterLocation()));
 		assertFalse(e.isJumping());

@@ -11,8 +11,8 @@ public class Boss extends Enemy {
 	private Weapon specialWeapon;
 	private List<Ability> bossAbilities = new ArrayList<Ability>();
 	
-	public Boss(String name, int health, int dam, int def, int spd, int h, int w, int jH) {
-		super(name, health, dam, def, spd, h, w, jH);
+	public Boss(String name, int health, int dam, int def, int spd, int h, int w, int jH, String sS) {
+		super(name, health, dam, def, spd, h, w, jH, sS);
 	}
 	
 	//Getters and Setters

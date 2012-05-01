@@ -68,12 +68,20 @@ public class GameStateView extends BasicGame {
 		Iterator<Character> entityIter = entities.iterator();
 		while (entityIter.hasNext()) {
 			Character currentChar = entityIter.next();
+			if (currentChar.isJumping()) {
+				String resName = GameStateView.class.getPackage().getName().replace('.', '/') + "/res/" +
+						"ShadowSheet35x35.png";
+				Image shadow = new Image(resName);
+				shadow.draw(currentChar.getCharacterLocation().getxLocation() + 5, 
+						HEIGHT - currentChar.getProperties().getHeight() + 30 - currentChar.getCharacterLocation().getyLocation());
+			}
 			sprite = CharacterAnimationFactory.loadAnimation(currentChar);
 			int charHeight = sprites.get(currentChar).getHeight();
 			charHeight = charHeight - currentChar.getProperties().getHeight();
 			if (currentChar.isJumping()) {
 				sprite.draw(currentChar.getJumpingLocation().getxLocation(),
 						HEIGHT - currentChar.getProperties().getHeight() - currentChar.getJumpingLocation().getyLocation());
+				
 			} else {
 				sprite.draw(currentChar.getCharacterLocation().getxLocation(),
 						HEIGHT - currentChar.getProperties().getHeight() - currentChar.getCharacterLocation().getyLocation());

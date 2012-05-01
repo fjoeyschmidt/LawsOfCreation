@@ -19,7 +19,7 @@ public class Space {
 		topLeft = loc;
 		topX = topLeft.getxLocation() + width;
 		topY = topLeft.getyLocation() + height;
-		setTopRight(new Location(topX, topY));
+		setBottomRight(new Location(topX, topY));
 	}
 	
 	public static Space getCharacterSpace(Character c) {
@@ -30,8 +30,8 @@ public class Space {
 	
 	//check two Spaces to see if they're the same
 	public boolean sameSpace(Space compare) {
-		if (Location.sameLocation(compare.getBottomLeft(), this.topLeft) &&
-				Location.sameLocation(compare.getTopRight(), this.getTopRight())) {
+		if (Location.sameLocation(compare.getTopLeft(), this.topLeft) &&
+				Location.sameLocation(compare.getBottomRight(), this.getBottomRight())) {
 			return true;
 		} else {
 			return false;
@@ -102,19 +102,19 @@ public class Space {
 	}
 
 	//Getters and Setters
-	public Location getBottomLeft() {
+	public Location getTopLeft() {
 		return topLeft;
 	}
 
-	public void setBottomLeft(Location bottomLeft) {
-		this.topLeft = bottomLeft;
+	public void setTopLeft(Location topLeft) {
+		this.topLeft = topLeft;
 	}
 
-	public Location getTopRight() {
+	public Location getBottomRight() {
 		return bottomRight;
 	}
 
-	public void setTopRight(Location topRight) {
-		this.bottomRight = topRight;
+	public void setBottomRight(Location bottomRight) {
+		this.bottomRight = bottomRight;
 	}
 }

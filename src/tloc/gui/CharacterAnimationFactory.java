@@ -21,6 +21,9 @@ public class CharacterAnimationFactory {
 	private static Map<String, Animation> jumpingDownRightAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> attackingRightAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> attackingLeftAnimationMap = new HashMap<String, Animation>();
+	private static Integer spriteWidth;
+	private static Integer spriteHeight;
+	private static String[] spriteDimensions = new String[2]; 
 	
 	//loads and returns the sprite
 
@@ -83,9 +86,14 @@ public class CharacterAnimationFactory {
 	private static Animation _loadAnimation(Character c) throws SlickException {
 		Animation charAnim = null;
 		String resName = CharacterAnimationFactory.class.getPackage().getName().replace('.', '/') + "/res/" 
-				+ c.getCharacterName() + "Sheet.png";;
+				+ c.getCharacterName() + "Sheet" + c.getSpriteSize() + ".png";
+		spriteDimensions = c.getSpriteSize().split("x");
+		spriteWidth = new Integer(spriteDimensions[0]);
+		spriteHeight = new Integer(spriteDimensions[1]);
+		
 		if ( c.isMoving() ) {
-			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
+			
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), spriteWidth, spriteHeight);
 			Image[] charFrames = new Image[4];
 			charFrames[0] = charSheet.getSubImage(0, 2);
 			charFrames[1] = charSheet.getSubImage(0, 1);
@@ -97,7 +105,7 @@ public class CharacterAnimationFactory {
 			charAnim = new Animation(charFrames, 120);
 		}
 		if( !c.isMoving() ){
-			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), spriteWidth, spriteHeight);
 			Image[] charFrames = new Image[1];
 			charFrames[0] = charSheet.getSubImage(0, 0);
 			if (c.getFacingDirection() <= 0) {
@@ -106,7 +114,7 @@ public class CharacterAnimationFactory {
 			charAnim = new Animation(charFrames, 10);
 		}
 		if ( c.getJumpDirection() > 0 ) {
-			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), spriteWidth, spriteHeight);
 			Image[] charFrames = new Image[1];
 			charFrames[0] = charSheet.getSubImage(0, 5);
 			if (c.getFacingDirection() <= 0 ) {
@@ -115,7 +123,7 @@ public class CharacterAnimationFactory {
 			charAnim = new Animation(charFrames, 10 * c.getProperties().getJumpHeight());
 		}
 		if ( c.getJumpDirection() < 0 ) {
-			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), spriteWidth, spriteHeight);
 			Image[] charFrames = new Image[1];
 			charFrames[0] = charSheet.getSubImage(0, 6);
 			if (c.getFacingDirection() <= 0 ) {
@@ -124,7 +132,7 @@ public class CharacterAnimationFactory {
 			charAnim = new Animation(charFrames, 10 * c.getProperties().getJumpHeight());
 		}
 		if( c.isAttacking() ) {
-			SpriteSheet charSheet = new SpriteSheet(new Image(resName), 51, 61);
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), spriteWidth, spriteHeight);
 			Image[] charFrames = new Image[2];
 			charFrames[0] = charSheet.getSubImage(0, 7);
 			charFrames[1] = charSheet.getSubImage(0, 8);
