@@ -17,7 +17,7 @@ public class GameState extends Observable {
 	private Area currentArea;
 	private Player player;
 	private Enemy[] enemies = new Enemy[5];
-	private static List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
+	private /*static*/ List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
 
 	//constructor
 	public GameState() {
@@ -25,6 +25,13 @@ public class GameState extends Observable {
 		player = new Player();
 		player.setCharacterLocation(new Location(100, 300));
 		setPlayer(player);
+		
+		setUpEnemies();
+		
+		gameOver = false;
+	}
+
+	private void setUpEnemies() {
 		for(int i = 0; i < 5; i++) {
 			enemies[i] = new Enemy("Karn", 100, i, 2, 2, 10, 10, 0, "60x90");
 			enemies[i].setCharacterLocation(new Location(600, (i*50)));
@@ -34,9 +41,6 @@ public class GameState extends Observable {
 			Enemy enemy = enemies[i];
 			addCharacter(enemy);
 		}
-		
-		
-		gameOver = false;
 	}
 
 	//updates game state
@@ -48,11 +52,18 @@ public class GameState extends Observable {
 			Character c = iter.next();
 			
 			if (c.isAttacking()) {
-				Combat.attack(c, GameState.getEntityList());
+				Combat.attack(c, /*GameState.*/this.getEntityList());
 			} else {
 				c.move(currentArea);
 				
 				//^look into this^ as possible reason for attack animations failing 
+			}
+		}
+		
+		for (iter = entities.iterator(); iter.hasNext(); ) {
+			Character c = iter.next();
+			if (c.isDead()) {
+				iter.remove();
 			}
 		}
 	}
@@ -60,7 +71,7 @@ public class GameState extends Observable {
 	
 
 	//add a new character to game state
-	public static void addCharacter(Character c) {
+	public /*static*/ void addCharacter(Character c) {
 		entities.add(c);
 	}
 
@@ -97,7 +108,7 @@ public class GameState extends Observable {
 		this.gameOver = gameOver;
 	}
 
-	public static List<Character> getEntityList() {
+	public /*static*/ List<Character> getEntityList() {
 		return entities;
 	}
 }

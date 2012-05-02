@@ -28,7 +28,6 @@ public class Combat {
 		
 		//check to see if any entities in gamestate are within the attackGrid
 		Iterator<Character> charIter = entities.iterator();
-		List<Character> deadGuys = new ArrayList<Character>();
 		while (charIter.hasNext()) {
 			Character check = charIter.next();
 			if ( !(check == c) ) {
@@ -40,13 +39,12 @@ public class Combat {
 					}
 					check.setCurrentHealth(check.getCurrentHealth() - damage);
 					if(check.getCurrentHealth() <= 0) {
-						deadGuys.add(check);
+						check.setDead(true);
 					}
 				}
 			}
 		}
 		
-		entities.removeAll(deadGuys);
 		
 	}
 

@@ -23,7 +23,7 @@ public abstract class Character {
 	private int facingDirection = 1, xDirection = 0, yDirection = 0, jumpDirection = 0;
 	private Space spaceTaken;
 	private Location characterLocation, jumpingLocation;  //top left corner
-	private boolean isJumping, isAttacking;
+	private boolean isJumping, isAttacking, isDead;
 	private String SpriteSize;
 	
 	public Character(String name, int health, int dam, int def, int spd, int h, int w, int jH, String sS) {
@@ -34,6 +34,7 @@ public abstract class Character {
 		speed = spd;
 		properties = new CharacterProperties(h, w, jH, health);
 		setSpriteSize(sS);
+		setDead(false);
 	}
 	
 	//move method
@@ -207,5 +208,13 @@ public abstract class Character {
 
 	public void setSpriteSize(String spriteSize) {
 		SpriteSize = spriteSize;
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
 	}
 }

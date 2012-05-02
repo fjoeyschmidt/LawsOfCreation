@@ -38,13 +38,13 @@ public class GameStateView extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		game = new GameState();
 		Controls.newControls();
-		entities = GameState.getEntityList();
+		entities = /*GameState.*/game.getEntityList();
 
 		//get image for area
 		area = SpriteFactory.getSprite(game.getCurrentArea());
 
 		//get all characters
-		entities = GameState.getEntityList();
+		entities = /*GameState.*/game.getEntityList();
 		Iterator<Character> charIter = entities.iterator();
 		//map character animations with characters
 		while (charIter.hasNext()) {

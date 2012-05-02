@@ -12,7 +12,7 @@ public class Enemy extends Character {
 	}
 	
 	//attack player
-	public void attackPlayer() {
+	public void attackPlayer(Player p) {
 		
 	}
 	
