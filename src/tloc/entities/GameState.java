@@ -51,8 +51,8 @@ public class GameState extends Observable {
 		while (iter.hasNext()) {
 			Character c = iter.next();
 			
-			if (c.isAttacking()) {
-				Combat.attack(c, /*GameState.*/this.getEntityList());
+			if (c.isAttacking() && c.getAttackCounter() == 0) {
+				Combat.attack(c, this.getEntityList());
 			} else {
 				c.move(currentArea);
 				

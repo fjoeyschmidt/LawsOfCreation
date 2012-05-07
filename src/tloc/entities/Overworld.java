@@ -2,13 +2,12 @@ package tloc.entities;
 
 /** Class for top-down Overworld Areas.
  */
-public class Overworld extends Area {
+public class Overworld extends Area implements IDisplayable {
 	
 	public Overworld(int height, int width) {
 		super(height, width);
 	}
 	
-	@Override
 	public SpriteId getSpriteId() {
 		return SpriteId.OVERWORLD;
 	}

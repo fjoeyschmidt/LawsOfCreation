@@ -25,6 +25,7 @@ public abstract class Character {
 	private Location characterLocation, jumpingLocation;  //top left corner
 	private boolean isJumping, isAttacking, isDead;
 	private String SpriteSize;
+	private int attackCounter;
 	
 	public Character(String name, int health, int dam, int def, int spd, int h, int w, int jH, String sS) {
 		setCharacterName(name);
@@ -35,6 +36,7 @@ public abstract class Character {
 		properties = new CharacterProperties(h, w, jH, health);
 		setSpriteSize(sS);
 		setDead(false);
+		setAttackCounter(0);
 	}
 	
 	//move method
@@ -53,7 +55,6 @@ public abstract class Character {
 	//attack method
 	public void attack() {
 		this.setIsAttacking(true);
-		System.out.println("attacked");
 	}
 	
 	//block method
@@ -140,6 +141,9 @@ public abstract class Character {
 	
 	public void setIsAttacking(boolean isAttacking) {
 		this.isAttacking = isAttacking;
+		if (!isAttacking) {
+			this.setAttackCounter(0);
+		}
 	}
 	
 	public boolean isAttacking() {
@@ -216,5 +220,13 @@ public abstract class Character {
 
 	public void setDead(boolean isDead) {
 		this.isDead = isDead;
+	}
+
+	public int getAttackCounter() {
+		return attackCounter;
+	}
+
+	public void setAttackCounter(int attackCounter) {
+		this.attackCounter = attackCounter;
 	}
 }

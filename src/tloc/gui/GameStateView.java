@@ -68,7 +68,13 @@ public class GameStateView extends BasicGame {
 		Iterator<Character> entityIter = entities.iterator();
 		while (entityIter.hasNext()) {
 			Character currentChar = entityIter.next();
-			if (currentChar.isJumping()) {
+			if (currentChar.isAttacking()) {
+				if( currentChar.getAttackCounter() < 30) {
+					currentChar.setAttackCounter(currentChar.getAttackCounter() + 1);
+				} else {
+					currentChar.setIsAttacking(false);
+				}
+			} else if (currentChar.isJumping()) {
 				String resName = GameStateView.class.getPackage().getName().replace('.', '/') + "/res/" +
 						"ShadowSheet35x35.png";
 				Image shadow = new Image(resName);
@@ -85,9 +91,6 @@ public class GameStateView extends BasicGame {
 			} else {
 				sprite.draw(currentChar.getCharacterLocation().getxLocation(),
 						HEIGHT - currentChar.getProperties().getHeight() - currentChar.getCharacterLocation().getyLocation());
-				if(currentChar.isAttacking()) {
-					currentChar.setIsAttacking(false);
-				}
 			}
 		}
 	}
