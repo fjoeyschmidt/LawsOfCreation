@@ -27,7 +27,7 @@ public class GameState extends Observable {
 		setPlayer(player);
 		EnemyGenerator.generateEnemies(this);
 		setGameOver(false);
-		setMaxEnemies(1);
+		setMaxEnemies(2);
 	}
 
 	//updates game state
@@ -56,13 +56,16 @@ public class GameState extends Observable {
 					c.setAttackCounter(0);
 				}
 			} else {
-				c.move(currentArea);
+				c.move(currentArea, entities);
 			}
 		}
 		
 		for (Character c : entities) {
 			if (c.getCurrentHealth() <= 0) {
 				c.setDead(true);
+				if (c == player) {
+					setGameOver(true);
+				}
 			}
 		}
 		
@@ -71,6 +74,7 @@ public class GameState extends Observable {
 		for (iter = entities.iterator(); iter.hasNext(); ) {
 			Character c = iter.next();
 			if (c.isDead()) {
+				player.addExp(c.getLevel());
 				iter.remove();
 			}
 		}

@@ -49,8 +49,8 @@ public abstract class EnemyGenerator {
 	private static Weapon createScaledWeapon() {
 		int damage = random.nextInt( game.getPlayer().getLevel() );
 		damage++;
-		damage = damage * 5;
-		return new Weapon("enemyWeapon", damage, 15);
+		damage = damage * 2;
+		return new Weapon("enemyWeapon", damage, 10);
 	}
 	
 	private static Location generateStartingLocation() {

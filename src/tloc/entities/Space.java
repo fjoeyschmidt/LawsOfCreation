@@ -63,19 +63,11 @@ public class Space {
 	 * Stops movement of Character in
 	 * direction of collision;
 	 */
-	public static void checkCollision(Character c, Space compare) {
-		Space space;
-		//check collision left and right
-		space = getCharacterSpace(c);
-		if (checkOverlap(space, compare)) {
-			c.setxDirection(0);
+	public static boolean checkCollision(Space character, Space check) {
+		if ( checkOverlap(character, check) ) {
+			return true;
 		}
-		
-		//check collision up and down
-		space = getCharacterSpace(c);
-		if (checkOverlap(space, compare)) {
-			c.setyDirection(0);
-		}
+		return false;
 	}
 	
 	//return a list of locations on the perimeter of space

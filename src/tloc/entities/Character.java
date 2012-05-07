@@ -1,5 +1,7 @@
 package tloc.entities;
 
+import java.util.List;
+
 
 /** Abstract superclass for all characters
  * including Player, Enemy, Boss and NPC.
@@ -42,8 +44,8 @@ public abstract class Character {
 	}
 	
 	//move method
-	public void move(Area area) {
-		Movement.moveCharacter(this, area);
+	public void move(Area area, List<Character> entities) {
+		Movement.moveCharacter(this, area, entities);
 	}
 	
 	//jump method
@@ -119,7 +121,7 @@ public abstract class Character {
 	}
 
 	public Space getSpaceTaken() {
-		return spaceTaken;
+		return Space.getCharacterSpace(this);
 	}
 
 	public Location getCharacterLocation() {
@@ -132,7 +134,7 @@ public abstract class Character {
 	}
 
 	private void setCharacterSpace() {
-		this.spaceTaken = Space.getCharacterSpace(this);
+		this.setSpaceTaken(Space.getCharacterSpace(this));
 	}
 
 	public void setIsJumping(boolean isJumping) {
@@ -256,5 +258,9 @@ public abstract class Character {
 
 	public void setNewCharacter(boolean newCharacter) {
 		this.newCharacter = newCharacter;
+	}
+
+	public void setSpaceTaken(Space spaceTaken) {
+		this.spaceTaken = spaceTaken;
 	}
 }

@@ -1,15 +1,18 @@
 package tloc.gui;
 
+import java.awt.Font;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 import tloc.entities.Controls;
 import tloc.entities.GameState;
@@ -19,10 +22,11 @@ import tloc.entities.Character;
  * GameStateView draws the GUI.
  *
  */
-public class GameStateView extends BasicGame {
-
-	public GameStateView(String title) {
-		super(title);
+public class GameStateView extends BasicGameState {
+	private int stateID = 0;
+	
+	public GameStateView(int stateID) {
+		this.stateID = stateID;
 	}
 
 	private static GameState game;
@@ -31,10 +35,13 @@ public class GameStateView extends BasicGame {
 	private Map<Character, Animation> sprites = new HashMap<Character, Animation>();
 	private Image area;
 	private Animation sprite;
+	private Font font = new Font("Verdana", Font.BOLD, 40);
+	private TrueTypeFont trueTypeFont;
 
 	//initialize game Objects
 	@Override
-	public void init(GameContainer gc) throws SlickException {
+	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+		trueTypeFont = new TrueTypeFont(font, true);
 		game = new GameState();
 		Controls.newControls();
 
@@ -44,30 +51,19 @@ public class GameStateView extends BasicGame {
 		//add new characters
 		addNewCharacters();
 	}
-
-	public void addNewCharacters() throws SlickException {
-		//get all characters
-		entities = game.getEntityList();
-		//map character animations with characters
-		for (Character currentChar : entities) {
-			if ( currentChar.isNewCharacter() ) {
-				sprites.put(currentChar, CharacterAnimationFactory.loadAnimation(currentChar));
-
-				//set height and width properties of character to reflect sprite size
-				currentChar.getProperties().setHeight(sprites.get(currentChar).getHeight());
-				currentChar.getProperties().setWidth(sprites.get(currentChar).getWidth());
-				
-				currentChar.setNewCharacter(false);
-			}
-		}
-	}
-
+	
 	//render gui objects method
 	@Override
-	public void render(GameContainer gc,  Graphics g)
+	public void render(GameContainer container, StateBasedGame state, Graphics arg2)
 			throws SlickException {
+		String playerHealth = "Health: " + game.getPlayer().getCurrentHealth() + " / " + game.getPlayer().getProperties().getMaxHealth();
+		String playerXP = "Exp: " + game.getPlayer().getExp() + " / " + game.getPlayer().getExpToLvl();
+				
 		//draw area
 		area.draw(0, 0);
+		trueTypeFont.drawString(200, 20, playerHealth);
+		trueTypeFont.drawString(250, 70, playerXP);
+		
 		
 		//add new characters
 		addNewCharacters();
@@ -97,20 +93,48 @@ public class GameStateView extends BasicGame {
 		
 		//if Player dies open Game Over screen
 		if( game.isGameOver() ) {
-			
+			state.enterState(RunGame.GAMEOVERSTATE);
+		}
+		if ( game.getPlayer().checkLvlUp() ) {
+			state.enterState(RunGame.LEVELUPSTATE);
 		}
 	}
 
 	//update gamestate method
 	@Override
-	public void update(GameContainer gc, int delta) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame arg1, int arg2)
+			throws SlickException {
+		if (GameController.lvlUp) {
+			GameController.levelUp(game.getPlayer());
+		}
 		gc.getInput();
 		//call method handler for player input
 		GameController.handleInput(gc.getInput(), game);
 
 		//updates game state
 		game.update();
-		
-		
 	}
+
+	@Override
+	public int getID() {
+		return stateID;
+	}
+
+	public void addNewCharacters() throws SlickException {
+		//get all characters
+		entities = game.getEntityList();
+		//map character animations with characters
+		for (Character currentChar : entities) {
+			if ( currentChar.isNewCharacter() ) {
+				sprites.put(currentChar, CharacterAnimationFactory.loadAnimation(currentChar));
+
+				//set height and width properties of character to reflect sprite size
+				currentChar.getProperties().setHeight(sprites.get(currentChar).getHeight());
+				currentChar.getProperties().setWidth(sprites.get(currentChar).getWidth());
+				
+				currentChar.setNewCharacter(false);
+			}
+		}
+	}
+
 }

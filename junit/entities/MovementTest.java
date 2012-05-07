@@ -2,6 +2,9 @@ package entities;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,6 +26,7 @@ public class MovementTest {
 	private int ewidth = 2;
 	private int ejumpHeight = 5;
 	private Location enemyLocation = new Location(1, 1);
+	private Location playerLocation = new Location(50, 50);
 	private String sS = "30x30";
 	private int phealth = 30;
 	private int pdamage = 2;
@@ -31,6 +35,7 @@ public class MovementTest {
 	private int pheight = 2;
 	private int pwidth = 2;
 	private int pjumpHeight = 5;
+	private List<Character> entities = new ArrayList<Character>();
 	
 	Location rightOrLeft = new Location(1, 0);
 	Location upOrDown = new Location(0, 1);
@@ -45,6 +50,7 @@ public class MovementTest {
 		p = new Enemy("player", phealth, pdamage, pdefense, pspeed, pjumpHeight, sS);
 		p.getProperties().setHeight(pheight);
 		p.getProperties().setWidth(pwidth);
+		p.setCharacterLocation(playerLocation);
 	}
 
 	// movement test
@@ -54,7 +60,9 @@ public class MovementTest {
 		e.setSpeed(3);
 		e.setxDirection(1);
 		e.setyDirection(1);
-		Movement.moveCharacter(e, new SubArea(100, 100));
+		entities.add(p);
+		entities.add(e);
+		Movement.moveCharacter(e, new SubArea(100, 100), entities);
 		
 		assertTrue(e.isMoving());
 		assertTrue(Location.sameLocation(new Location(4, 4),
@@ -76,7 +84,7 @@ public class MovementTest {
 		e.jump();
 		assertTrue(e.isJumping());
 		while (e.isJumping()) {
-			e.move(null);
+			e.move(new SubArea(100, 100), entities);
 		}
 		assertTrue(Location.sameLocation(enemyLocation, e.getCharacterLocation()));
 		assertFalse(e.isJumping());
@@ -86,11 +94,11 @@ public class MovementTest {
 		e.jump();
 		assertTrue(e.isJumping());
 		while (e.isJumping()) {
-			e.move(null);
+			e.move(new SubArea(100, 100), entities);
 			counter++;
 			e.setyDirection(1);
 		}
-		assertTrue(Location.sameLocation(new Location(enemyLocation.getxLocation() + (counter * e.getSpeed()), 
+		assertTrue(Location.sameLocation(new Location(enemyLocation.getxLocation(), 
 				enemyLocation.getyLocation()), e.getCharacterLocation()));
 		assertFalse(e.isJumping());
 	}

@@ -1,5 +1,7 @@
 package tloc.entities;
 
+import java.util.List;
+
 
 /** A class containing static methods that handle
  * the movement of a character. Includes jumping.
@@ -7,7 +9,7 @@ package tloc.entities;
 
 public class Movement {
 	//move
-	public static void moveCharacter(Character c, Area area) {
+	public static void moveCharacter(Character c, Area area, List<Character> entities) {
 		if ( c.getCharacterLocation() != null ) {
 			if (c.isJumping()) {
 				jumpCharacter(c);
@@ -16,8 +18,15 @@ public class Movement {
 			int x = c.getCharacterLocation().getxLocation() + (c.getxDirection() * c.getSpeed());
 			int y = c.getCharacterLocation().getyLocation() + (c.getyDirection() * c.getSpeed());
 			Location z = new Location(x, y);
-			z = Area.outOfBounds(area, z);
-			c.setCharacterLocation(z);
+			for (Character check : entities) {
+				if (check != c) {
+					if ( !(Space.checkCollision(new Space(z, c.getProperties().getHeight(), c.getProperties().getWidth()), 
+							new Space(check.getCharacterLocation(), check.getProperties().getHeight(), check.getProperties().getWidth()) ))) {
+						z = Area.outOfBounds(area, z);
+						c.setCharacterLocation(z);
+					}
+				}
+			}
 		}
 	}
 

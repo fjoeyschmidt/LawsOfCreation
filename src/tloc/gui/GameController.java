@@ -5,14 +5,13 @@ import tloc.entities.Command;
 import tloc.entities.CommandHandler;
 import tloc.entities.Controls;
 import tloc.entities.GameState;
+import tloc.entities.LevelUpEnum;
 
 public class GameController {
-	
-	
+	public static boolean lvlUp = false;
+	private static LevelUpEnum statUp;
 	
 	public static void handleInput(Input input, GameState game) {
-		
-		
 		//check if input is to move up or down
 		if (input.isKeyDown(Input.KEY_S)) {
 			handleCommand(Controls.getCommand(Input.KEY_S), game);
@@ -50,6 +49,15 @@ public class GameController {
 	//takes a command and calls player methods accordingly
 	private static void handleCommand(Command command, GameState game) {
 		CommandHandler.handleCommand(command, game.getPlayer());
+	}
+
+	public static void handleLevelUp(LevelUpEnum up) {
+		lvlUp = true;
+		statUp = up;
+	}
+	
+	public static void levelUp(tloc.entities.LevelUp level) {
+		level.levelUp(statUp);
 	}
 
 	
