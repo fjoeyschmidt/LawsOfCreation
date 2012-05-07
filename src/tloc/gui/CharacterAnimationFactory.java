@@ -37,8 +37,7 @@ public class CharacterAnimationFactory {
 				a = getAnimation(c, attackingRightAnimationMap);
 			}
 			
-		}
-		else if (c.isJumping()) {
+		} else if (c.isJumping()) {
 			if (c.getFacingDirection() < 0 && c.getJumpDirection() > 0) {
 				a = getAnimation(c, jumpingUpLeftAnimationMap);
 			}

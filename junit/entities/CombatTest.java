@@ -9,11 +9,13 @@ import tloc.entities.Enemy;
 import tloc.entities.GameState;
 import tloc.entities.Location;
 import tloc.entities.Player;
+import tloc.entities.Weapon;
 
 public class CombatTest {
 	private GameState game;
 	private Player player;
 	private Enemy enemy1;
+	private Weapon playerWeapon;
 	private int startingHealth = 10, startingDefense = 1, startingDamage = 1;
 
 	@Before
@@ -21,10 +23,13 @@ public class CombatTest {
 		// reset/clear any global state
 		
 		game = new GameState();
+		playerWeapon = new Weapon("Starter", 50, 5);
 		player = game.getPlayer();
-		enemy1 = new Enemy("enemy1", startingHealth, startingDamage, startingDefense, 1, 
-				player.getProperties().getHeight(), player.getProperties().getWidth(), 20, "60x90");
-		/*GameState.*/game.addCharacter(enemy1);
+		game.getPlayer().setWeapon(playerWeapon);
+		enemy1 = new Enemy("enemy1", startingHealth, startingDamage, startingDefense, 1, 20, "60x90");
+		enemy1.getProperties().setHeight(game.getPlayer().getProperties().getHeight());
+		enemy1.getProperties().setWidth(game.getPlayer().getProperties().getWidth());
+		game.addCharacter(enemy1);
 		player.getWeapon().setWeaponDamage(5);
 	}
 
@@ -47,7 +52,8 @@ public class CombatTest {
 			game.update();
 			assertEquals(enemy1.getProperties().getMaxHealth() - (damage * i), enemy1.getCurrentHealth());
 		}
-		assertFalse(/*GameState.*/game.getEntityList().contains(enemy1));
+		game.update();
+		assertFalse(game.getEntityList().contains(enemy1));
 	}
 
 	@Test
@@ -66,7 +72,7 @@ public class CombatTest {
 		enemy1.getProperties().setMaxHealth(10);
 		enemy1.setFacingDirection(1);
 		
-		System.out.println(player.getDamage() + "" + player.getWeapon().getWeaponDamage() + "" + enemy1.getDefense());
+		System.out.println(player.getDamage() + " " + player.getWeapon().getWeaponDamage() + " " + enemy1.getDefense());
 		
 		int damage = player.getWeapon().getWeaponDamage() + player.getDamage() - enemy1.getDefense();
 		

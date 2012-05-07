@@ -1,7 +1,6 @@
 package tloc.gui;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,22 +37,28 @@ public class GameStateView extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		game = new GameState();
 		Controls.newControls();
-		entities = /*GameState.*/game.getEntityList();
 
 		//get image for area
 		area = SpriteFactory.getSprite(game.getCurrentArea());
 
-		//get all characters
-		entities = /*GameState.*/game.getEntityList();
-		Iterator<Character> charIter = entities.iterator();
-		//map character animations with characters
-		while (charIter.hasNext()) {
-			Character currentChar = charIter.next();
-			sprites.put(currentChar, CharacterAnimationFactory.loadAnimation(currentChar));
+		//add new characters
+		addNewCharacters();
+	}
 
-			//set height and width properties of character to reflect sprite size
-			currentChar.getProperties().setHeight(sprites.get(currentChar).getHeight());
-			currentChar.getProperties().setWidth(sprites.get(currentChar).getWidth());
+	public void addNewCharacters() throws SlickException {
+		//get all characters
+		entities = game.getEntityList();
+		//map character animations with characters
+		for (Character currentChar : entities) {
+			if ( currentChar.isNewCharacter() ) {
+				sprites.put(currentChar, CharacterAnimationFactory.loadAnimation(currentChar));
+
+				//set height and width properties of character to reflect sprite size
+				currentChar.getProperties().setHeight(sprites.get(currentChar).getHeight());
+				currentChar.getProperties().setWidth(sprites.get(currentChar).getWidth());
+				
+				currentChar.setNewCharacter(false);
+			}
 		}
 	}
 
@@ -63,11 +68,13 @@ public class GameStateView extends BasicGame {
 			throws SlickException {
 		//draw area
 		area.draw(0, 0);
-
+		
+		//add new characters
+		addNewCharacters();
+		
 		//for each character draw their sprite
-		Iterator<Character> entityIter = entities.iterator();
-		while (entityIter.hasNext()) {
-			Character currentChar = entityIter.next();
+		entities = game.getEntityList();
+		for (Character currentChar : entities) {
 			if (currentChar.isAttacking()) {
 				if( currentChar.getAttackCounter() < 30) {
 					currentChar.setAttackCounter(currentChar.getAttackCounter() + 1);
@@ -92,6 +99,11 @@ public class GameStateView extends BasicGame {
 				sprite.draw(currentChar.getCharacterLocation().getxLocation(),
 						HEIGHT - currentChar.getProperties().getHeight() - currentChar.getCharacterLocation().getyLocation());
 			}
+		}
+		
+		//if Player dies open Game Over screen
+		if( game.isGameOver() ) {
+			
 		}
 	}
 

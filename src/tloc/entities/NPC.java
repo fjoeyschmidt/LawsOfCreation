@@ -7,8 +7,8 @@ package tloc.entities;
 
 public class NPC extends Character {
 	
-	public NPC(String name, int health, int dam, int def, int spd, int h, int w, int jH, String sS) {
-		super(name, health, dam, def, spd, h, w, jH, sS);
+	public NPC(String name, int health, int dam, int def, int spd, int jH, String sS) {
+		super(name, health, dam, def, spd, jH, sS);
 	}
 
 	//start conversation with player

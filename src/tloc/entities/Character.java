@@ -23,20 +23,22 @@ public abstract class Character {
 	private int facingDirection = 1, xDirection = 0, yDirection = 0, jumpDirection = 0;
 	private Space spaceTaken;
 	private Location characterLocation, jumpingLocation;  //top left corner
-	private boolean isJumping, isAttacking, isDead;
+	private boolean newCharacter, isJumping, isAttacking, isBlocking, isDead;
 	private String SpriteSize;
 	private int attackCounter;
+	private int level;
 	
-	public Character(String name, int health, int dam, int def, int spd, int h, int w, int jH, String sS) {
+	public Character(String name, int health, int dam, int def, int spd, int jH, String sS) {
 		setCharacterName(name);
 		currentHealth = health;
 		damage = dam;
 		defense = def;
 		speed = spd;
-		properties = new CharacterProperties(h, w, jH, health);
+		properties = new CharacterProperties(1, 1, jH, health);
 		setSpriteSize(sS);
 		setDead(false);
 		setAttackCounter(0);
+		setNewCharacter(true);
 	}
 	
 	//move method
@@ -46,7 +48,7 @@ public abstract class Character {
 	
 	//jump method
 	public void jump() {
-		if ( !(this.isJumping()) ) { 
+		if ( !(this.isJumping()) && !this.isAttacking() ) { 
 			this.setJumpingLocation(this.getCharacterLocation());
 			setIsJumping(true);
 		}
@@ -228,5 +230,29 @@ public abstract class Character {
 
 	public void setAttackCounter(int attackCounter) {
 		this.attackCounter = attackCounter;
+	}
+
+	public boolean isBlocking() {
+		return isBlocking;
+	}
+
+	public void setBlocking(boolean isBlocking) {
+		this.isBlocking = isBlocking;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+
+	public boolean isNewCharacter() {
+		return newCharacter;
+	}
+
+	public void setNewCharacter(boolean newCharacter) {
+		this.newCharacter = newCharacter;
 	}
 }

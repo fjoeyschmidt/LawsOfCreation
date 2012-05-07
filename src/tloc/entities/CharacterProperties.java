@@ -7,13 +7,14 @@ package tloc.entities;
 public class CharacterProperties {
 	private int height, width, jumpHeight, maxHealth;
 	private boolean canJump, killable;
-	private Weapon weapon;
 	
 	public CharacterProperties(int h, int w, int jH, int health) {
 		height = h;
 		width = w;
 		jumpHeight = jH;
 		maxHealth = health;
+		setKillable(true);
+		setCanJump(true);
 	}
 	
 	//Getters and Setters
@@ -63,13 +64,5 @@ public class CharacterProperties {
 
 	public void setKillable(boolean killable) {
 		this.killable = killable;
-	}
-
-	public Weapon getWeapon() {
-		return weapon;
-	}
-
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
 	}
 }

@@ -25,7 +25,9 @@ public class CharacterTest {
 	
 	@Before
 	public void setUp() {
-		e = new Enemy("enemy", health, damage, defense, speed, height, width, jumpHeight, sS);
+		e = new Enemy("enemy", health, damage, defense, speed, jumpHeight, sS);
+		e.getProperties().setHeight(height);
+		e.getProperties().setWidth(width);
 		e.setCharacterLocation(enemyLocation);
 		space = Space.getCharacterSpace(e);
 	}

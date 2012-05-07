@@ -13,11 +13,11 @@ import java.util.Observable;
 public class GameState extends Observable {
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
+	private int maxEnemies;
 	private boolean gameOver;
 	private Area currentArea;
 	private Player player;
-	private Enemy[] enemies = new Enemy[5];
-	private /*static*/ List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
+	private List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
 
 	//constructor
 	public GameState() {
@@ -25,53 +25,44 @@ public class GameState extends Observable {
 		player = new Player();
 		player.setCharacterLocation(new Location(100, 300));
 		setPlayer(player);
-		
-		setUpEnemies();
-		
-		gameOver = false;
-	}
-
-	private void setUpEnemies() {
-		for(int i = 0; i < 5; i++) {
-			enemies[i] = new Enemy("Karn", 100, i, 2, 2, 10, 10, 0, "60x90");
-			enemies[i].setCharacterLocation(new Location(600, (i*50)));
-			enemies[i].setFacingDirection(-1);
-		}
-		for(int i = 0; i < 5; i++) {
-			Enemy enemy = enemies[i];
-			addCharacter(enemy);
-		}
+		//EnemyGenerator.generateEnemies(this);
+		setGameOver(false);
+		setMaxEnemies(1);
 	}
 
 	//updates game state
 	public void update() {
 		
-		//call functions to move Characters
-		Iterator<Character> iter = entities.iterator();
-		while (iter.hasNext()) {
-			Character c = iter.next();
-			
-			if (c.isAttacking() && c.getAttackCounter() == 0) {
-				Combat.attack(c, this.getEntityList());
+		//add enemies to game state
+		//EnemyGenerator.generateEnemies(this);
+		
+		//for each Character in play (get AI actions) perform action
+		for (Character c : entities) {
+			if (c instanceof AI) {
+				if( c instanceof EnemyAI) {
+					((Enemy) c).action(player);
+				}
+			}
+			if (c.isAttacking()) {
+				if (c.getAttackCounter() == 0) {
+					Combat.attack(c, this.getEntityList());
+				}
 			} else {
 				c.move(currentArea);
-				
-				//^look into this^ as possible reason for attack animations failing 
 			}
 		}
 		
-		for (iter = entities.iterator(); iter.hasNext(); ) {
-			Character c = iter.next();
+		//check for dead characters in play and remove them
+		Iterator<Character> iter = entities.iterator();
+		for (Character c = iter.next(); iter.hasNext(); ) {
 			if (c.isDead()) {
-				iter.remove();
+				entities.remove(c);
 			}
 		}
 	}
 
-	
-
 	//add a new character to game state
-	public /*static*/ void addCharacter(Character c) {
+	public void addCharacter(Character c) {
 		entities.add(c);
 	}
 
@@ -108,7 +99,15 @@ public class GameState extends Observable {
 		this.gameOver = gameOver;
 	}
 
-	public /*static*/ List<Character> getEntityList() {
+	public List<Character> getEntityList() {
 		return entities;
+	}
+
+	public int getMaxEnemies() {
+		return maxEnemies;
+	}
+
+	public void setMaxEnemies(int maxEnemies) {
+		this.maxEnemies = maxEnemies;
 	}
 }
