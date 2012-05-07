@@ -61,7 +61,9 @@ public abstract class Character {
 	
 	//block method
 	public void block() {
-		Combat.block(this);
+		if (!this.isJumping && !this.isAttacking()) {
+			this.setIsBlocking(true);
+		}
 	}
 	
 	//Getters and Setters
@@ -236,7 +238,7 @@ public abstract class Character {
 		return isBlocking;
 	}
 
-	public void setBlocking(boolean isBlocking) {
+	public void setIsBlocking(boolean isBlocking) {
 		this.isBlocking = isBlocking;
 	}
 

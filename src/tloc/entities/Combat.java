@@ -5,17 +5,15 @@ import java.util.List;
 
 /** Class with static methods to handle combat */
 public class Combat {
+	private static final float fivePercent = 0.1f;
 
 	public static void attack(Character c, List<Character> entities) {
-		Space attackGrid;
-		
-		attackGrid = getAttackSpace(c);
+		Space attackGrid = getAttackSpace(c);
 		
 		checkHit(c, attackGrid, entities);
 	}
 
 	private static void checkHit(Character c, Space attackGrid, List<Character> entities) {
-		
 		//check to see if any entities in gamestate are within the attackGrid
 		for (Character check : entities) {
 			if ( !(check == c) ) {
@@ -25,17 +23,15 @@ public class Combat {
 					if ( damage < 0 ) {
 						damage = 0;
 					}
-					check.setCurrentHealth(check.getCurrentHealth() - damage);
-					if(check.getCurrentHealth() <= 0) {
-						check.setDead(true);
+					if (check.isBlocking()) {
+						if (isFacing(c, check)) {
+							damage = damage / 2;
+						}
 					}
+					check.setCurrentHealth(check.getCurrentHealth() - damage);
 				}
 			}
 		}
-	}
-	
-	public static void block(Character c) {
-		
 	}
 
 	public static Space getAttackSpace(Character c) {
@@ -50,6 +46,32 @@ public class Combat {
 					c.getProperties().getHeight(), c.getWeapon().getRange());
 		}
 		return attackGrid;
+	}
+	
+	public static void block(Character c) {
+		int heal = (int)(c.getCurrentHealth() * fivePercent);
+		if (heal < 1) {
+			heal = 1;
+		}
+		if (c.getCurrentHealth() < c.getProperties().getMaxHealth()) {
+			if (c.getCurrentHealth() + heal > c.getProperties().getMaxHealth()) {
+				c.setCurrentHealth(c.getProperties().getMaxHealth());
+			} else {
+				c.setCurrentHealth(c.getCurrentHealth() + heal);
+			}
+		}
+	}
+	
+	private static boolean isFacing(Character attacking, Character blocking) {
+		if (blocking.getCharacterLocation().getxLocation() < attacking.getCharacterLocation().getxLocation()
+				&& blocking.getFacingDirection() == -1) {
+			return true;
+		}
+		if (blocking.getCharacterLocation().getxLocation() > attacking.getCharacterLocation().getxLocation()
+				&& blocking.getFacingDirection() == 1) {
+			return true;
+		}
+		return false;
 	}
 
 }

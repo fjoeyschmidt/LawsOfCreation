@@ -3,6 +3,11 @@ package tloc.entities;
 public abstract class CommandHandler {
 	
 	public static void handleCommand(Command command, Character c) {
+		if (command == Command.BLOCK) {
+			c.block();
+		} else {
+			c.setIsBlocking(false);
+		}
 		if (command == Command.MOVERIGHT) {
 			c.setxDirection(1);
 		}
@@ -20,9 +25,6 @@ public abstract class CommandHandler {
 		}
 		if (command == Command.ATTACK) {
 			c.attack();
-		}
-		if (command == Command.BLOCK) {
-			c.block();
 		}
 	}
 }

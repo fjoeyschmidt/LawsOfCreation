@@ -75,13 +75,7 @@ public class GameStateView extends BasicGame {
 		//for each character draw their sprite
 		entities = game.getEntityList();
 		for (Character currentChar : entities) {
-			if (currentChar.isAttacking()) {
-				if( currentChar.getAttackCounter() < 30) {
-					currentChar.setAttackCounter(currentChar.getAttackCounter() + 1);
-				} else {
-					currentChar.setIsAttacking(false);
-				}
-			} else if (currentChar.isJumping()) {
+			if (currentChar.isJumping()) {
 				String resName = GameStateView.class.getPackage().getName().replace('.', '/') + "/res/" +
 						"ShadowSheet35x35.png";
 				Image shadow = new Image(resName);

@@ -25,7 +25,7 @@ public class GameState extends Observable {
 		player = new Player();
 		player.setCharacterLocation(new Location(100, 300));
 		setPlayer(player);
-		//EnemyGenerator.generateEnemies(this);
+		EnemyGenerator.generateEnemies(this);
 		setGameOver(false);
 		setMaxEnemies(1);
 	}
@@ -34,7 +34,7 @@ public class GameState extends Observable {
 	public void update() {
 		
 		//add enemies to game state
-		//EnemyGenerator.generateEnemies(this);
+		EnemyGenerator.generateEnemies(this);
 		
 		//for each Character in play (get AI actions) perform action
 		for (Character c : entities) {
@@ -42,21 +42,36 @@ public class GameState extends Observable {
 				if( c instanceof EnemyAI) {
 					((Enemy) c).action(player);
 				}
-			}
-			if (c.isAttacking()) {
+			} if (c.isBlocking()) {
+				Combat.block(c);
+			} else if (c.isAttacking()) {
 				if (c.getAttackCounter() == 0) {
 					Combat.attack(c, this.getEntityList());
+					c.setAttackCounter(1);
+				}
+				if( c.getAttackCounter() < 30) {
+					c.setAttackCounter(c.getAttackCounter() + 1);
+				} else {
+					c.setIsAttacking(false);
+					c.setAttackCounter(0);
 				}
 			} else {
 				c.move(currentArea);
 			}
 		}
 		
+		for (Character c : entities) {
+			if (c.getCurrentHealth() <= 0) {
+				c.setDead(true);
+			}
+		}
+		
 		//check for dead characters in play and remove them
-		Iterator<Character> iter = entities.iterator();
-		for (Character c = iter.next(); iter.hasNext(); ) {
+		Iterator<Character> iter;
+		for (iter = entities.iterator(); iter.hasNext(); ) {
+			Character c = iter.next();
 			if (c.isDead()) {
-				entities.remove(c);
+				iter.remove();
 			}
 		}
 	}

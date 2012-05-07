@@ -16,6 +16,7 @@ public class Controls {
 		controlMap.put(Command.MOVERIGHT, Input.KEY_D);
 		controlMap.put(Command.JUMP, Input.KEY_SPACE);
 		controlMap.put(Command.ATTACK, Input.MOUSE_LEFT_BUTTON);
+		controlMap.put(Command.BLOCK, Input.MOUSE_RIGHT_BUTTON);
 	}
 	
 	//returns command based off int value
@@ -37,6 +38,9 @@ public class Controls {
 		}
 		if (input == controlMap.get(Command.ATTACK)) {
 			return Command.ATTACK;
+		}
+		if (input == controlMap.get(Command.BLOCK)) {
+			return Command.BLOCK;
 		}
 		return null;
 	}
@@ -92,5 +96,14 @@ public class Controls {
 	public void setAttack(int attack) {
 		controlMap.remove(Command.ATTACK);
 		controlMap.put(Command.ATTACK, attack);
+	}
+	
+	public int getBlock() {
+		return controlMap.get(Command.BLOCK);
+	}
+
+	public void setBlock(int block) {
+		controlMap.remove(Command.BLOCK);
+		controlMap.put(Command.BLOCK, block);
 	}
 }

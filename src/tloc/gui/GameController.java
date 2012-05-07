@@ -40,6 +40,11 @@ public class GameController {
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			handleCommand(Controls.getCommand(Input.MOUSE_LEFT_BUTTON), game);
 		}
+		
+		//check if input is block
+		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+			handleCommand(Controls.getCommand(Input.MOUSE_RIGHT_BUTTON), game);
+		}
 	}
 	
 	//takes a command and calls player methods accordingly

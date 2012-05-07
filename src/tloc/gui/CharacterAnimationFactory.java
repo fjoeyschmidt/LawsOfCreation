@@ -21,6 +21,8 @@ public class CharacterAnimationFactory {
 	private static Map<String, Animation> jumpingDownRightAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> attackingRightAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> attackingLeftAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> blockingRightAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> blockingLeftAnimationMap = new HashMap<String, Animation>();
 	private static Integer spriteWidth;
 	private static Integer spriteHeight;
 	private static String[] spriteDimensions = new String[2]; 
@@ -37,6 +39,13 @@ public class CharacterAnimationFactory {
 				a = getAnimation(c, attackingRightAnimationMap);
 			}
 			
+		} else if (c.isBlocking()) {
+			if (c.getFacingDirection() < 0) {
+				a = getAnimation(c, blockingLeftAnimationMap);
+			}
+			if (c.getFacingDirection() > 0) {
+				a = getAnimation(c, blockingRightAnimationMap);
+			}
 		} else if (c.isJumping()) {
 			if (c.getFacingDirection() < 0 && c.getJumpDirection() > 0) {
 				a = getAnimation(c, jumpingUpLeftAnimationMap);
@@ -141,6 +150,16 @@ public class CharacterAnimationFactory {
 			}
 			charAnim = new Animation(charFrames, 160);
 			
+		}
+		if ( c.isBlocking() ) {
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), spriteWidth, spriteHeight);
+			Image[] charFrames = new Image[1];
+			charFrames[0] = charSheet.getSubImage(0, 8);
+			
+			if (c.getFacingDirection() <= 0) {
+				charFrames = getFlipped(c, charFrames);
+			}
+			charAnim = new Animation(charFrames, 50);
 		}
 		
 		if(charAnim == null) {
