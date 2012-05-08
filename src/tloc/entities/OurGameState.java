@@ -17,8 +17,10 @@ public class OurGameState extends Observable {
 	private boolean gameOver;
 	private Area currentArea;
 	private Player player;
+	Structure tree = new Structure(new Location(400, 300), 10, 10, "35x70", "Tree");
 	private List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
-
+	private List<Structure> things = new ArrayList<Structure>();  //list of all structures
+	
 	//constructor
 	public OurGameState() {
 		currentArea = new SubArea(330, 760);
@@ -28,6 +30,7 @@ public class OurGameState extends Observable {
 		EnemyGenerator.generateEnemies(this);
 		setGameOver(false);
 		setMaxEnemies(2);
+//		addStructure(tree);
 	}
 
 	//updates game state
@@ -97,6 +100,10 @@ public class OurGameState extends Observable {
 	public void addCharacter(Character c) {
 		entities.add(c);
 	}
+	
+	public void addStructure(Structure s) {
+		things.add(s);
+	}
 
 	//getters and setters	
 	public static int getWidth() {
@@ -133,6 +140,10 @@ public class OurGameState extends Observable {
 
 	public List<Character> getEntityList() {
 		return entities;
+	}
+	
+	public List<Structure> getStructureList() {
+		return things;
 	}
 
 	public int getMaxEnemies() {

@@ -9,12 +9,14 @@ public class Structure {
 	private Location structureLocation; //top left corner
 	private int height, width;
 	private Space structureSpace;
+	private String SpriteSize, SpriteName;
 	
-	public Structure(Location loc, int h, int w) {
+	public Structure(Location loc, int h, int w, String sS, String sN) {
 		structureLocation = loc;
 		height = h;
 		width = w;
 		structureSpace = new Space(structureLocation, height, width);
+		SpriteSize = sS;
 	}
 	
 	//Getters and Setters
@@ -48,5 +50,13 @@ public class Structure {
 
 	public void setStructureSpace(Space structureSpace) {
 		this.structureSpace = structureSpace;
+	}
+	
+	public String getSpriteSize() {
+		return this.SpriteSize;
+	}
+	
+	public String getSpriteName() {
+		return this.SpriteName;
 	}
 }
