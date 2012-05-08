@@ -4,14 +4,18 @@ import org.newdawn.slick.Input;
 import tloc.entities.Command;
 import tloc.entities.CommandHandler;
 import tloc.entities.Controls;
-import tloc.entities.GameState;
+import tloc.entities.OurGameState;
 import tloc.entities.LevelUpEnum;
 
+/**
+ * @author fschmidt
+ *
+ */
 public class GameController {
 	public static boolean lvlUp = false;
 	private static LevelUpEnum statUp;
 	
-	public static void handleInput(Input input, GameState game) {
+	public static void handleInput(Input input, OurGameState game) {
 		//check if input is to move up or down
 		if (input.isKeyDown(Input.KEY_S)) {
 			handleCommand(Controls.getCommand(Input.KEY_S), game);
@@ -47,7 +51,7 @@ public class GameController {
 	}
 	
 	//takes a command and calls player methods accordingly
-	private static void handleCommand(Command command, GameState game) {
+	private static void handleCommand(Command command, OurGameState game) {
 		CommandHandler.handleCommand(command, game.getPlayer());
 	}
 
@@ -55,6 +59,8 @@ public class GameController {
 		lvlUp = true;
 		statUp = up;
 	}
+	
+	
 	
 	public static void levelUp(tloc.entities.LevelUp level) {
 		level.levelUp(statUp);

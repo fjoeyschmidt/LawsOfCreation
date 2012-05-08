@@ -25,12 +25,13 @@ public abstract class Character {
 	private int facingDirection = 1, xDirection = 0, yDirection = 0, jumpDirection = 0;
 	private Space spaceTaken;
 	private Location characterLocation, jumpingLocation;  //top left corner
-	private boolean newCharacter, isJumping, isAttacking, isBlocking, isDead;
+	private boolean newCharacter, isJumping, isAttacking, isBlocking, isDead, isFlinching;
 	private String SpriteSize;
 	private int attackCounter;
+	private int flinchCounter;
 	private int level;
 	
-	public Character(String name, int health, int dam, int def, int spd, int jH, String sS) {
+	public Character(String name, int health, int dam, int def, int spd, int jH, String sS, int lvl) {
 		setCharacterName(name);
 		currentHealth = health;
 		damage = dam;
@@ -40,7 +41,9 @@ public abstract class Character {
 		setSpriteSize(sS);
 		setDead(false);
 		setAttackCounter(0);
+		setFlinchCounter(0);
 		setNewCharacter(true);
+		setLevel(lvl);
 	}
 	
 	//move method
@@ -154,7 +157,15 @@ public abstract class Character {
 	
 	public boolean isAttacking() {
 		return this.isAttacking;
-	}	
+	}
+	
+	public boolean isFlinching() {
+		return this.isFlinching;
+	}
+	
+	public void setIsFlinching(boolean isFlinching) {
+		this.isFlinching = isFlinching;
+	}
 
 	public CharacterProperties getProperties() {
 		return properties;
@@ -228,6 +239,14 @@ public abstract class Character {
 		this.isDead = isDead;
 	}
 
+	public int getFlinchCounter() {
+		return flinchCounter;
+	}
+	
+	public void setFlinchCounter(int flinchCounter) {
+		this.flinchCounter = flinchCounter;
+	}
+	
 	public int getAttackCounter() {
 		return attackCounter;
 	}

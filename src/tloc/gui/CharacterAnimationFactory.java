@@ -23,6 +23,8 @@ public class CharacterAnimationFactory {
 	private static Map<String, Animation> attackingLeftAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> blockingRightAnimationMap = new HashMap<String, Animation>();
 	private static Map<String, Animation> blockingLeftAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> flinchingRightAnimationMap = new HashMap<String, Animation>();
+	private static Map<String, Animation> flinchingLeftAnimationMap = new HashMap<String, Animation>();
 	private static Integer spriteWidth;
 	private static Integer spriteHeight;
 	private static String[] spriteDimensions = new String[2]; 
@@ -31,7 +33,14 @@ public class CharacterAnimationFactory {
 
 	public static Animation loadAnimation(Character c) throws SlickException {
 		Animation a = null;
-		if (c.isAttacking()) {
+		if (c.isFlinching()) {
+			if (c.getFacingDirection() < 0) {
+				a = getAnimation(c, flinchingLeftAnimationMap);
+			}
+			if (c.getFacingDirection() > 0) {
+				a = getAnimation(c, flinchingRightAnimationMap);
+			}
+		} else if (c.isAttacking()) {
 			if (c.getFacingDirection() < 0) {
 				a = getAnimation(c, attackingLeftAnimationMap);
 			}
@@ -112,7 +121,7 @@ public class CharacterAnimationFactory {
 			}
 			charAnim = new Animation(charFrames, 120);
 		}
-		if( !c.isMoving() ){
+		if ( !c.isMoving() ){
 			SpriteSheet charSheet = new SpriteSheet(new Image(resName), spriteWidth, spriteHeight);
 			Image[] charFrames = new Image[1];
 			charFrames[0] = charSheet.getSubImage(0, 0);
@@ -161,10 +170,22 @@ public class CharacterAnimationFactory {
 			}
 			charAnim = new Animation(charFrames, 50);
 		}
+		if ( c.isFlinching() ) {
+			SpriteSheet charSheet = new SpriteSheet(new Image(resName), spriteWidth, spriteHeight);
+			Image[] charFrames = new Image[1];
+			charFrames[0] = charSheet.getSubImage(0, 4);
+			if (c.getFacingDirection() <= 0) {
+				charFrames = getFlipped(c, charFrames);
+			}
+			charAnim = new Animation(charFrames, 160);
+		}
 		
-		if(charAnim == null) {
+		if (charAnim == null) {
 			throw new SlickException("Animation is null");
 		}
+		
+		
+		
 		return charAnim;
 	}
 

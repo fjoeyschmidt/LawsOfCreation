@@ -11,8 +11,8 @@ public class Enemy extends Character implements EnemyAI{
 	private boolean fleeing, moveToPlayer;
 	private Command[] commandments;
 
-	public Enemy(String name, int health, int dam, int def, int spd, int jH, String sS) {
-		super(name, health, dam, def, spd, jH, sS);
+	public Enemy(String name, int health, int dam, int def, int spd, int jH, String sS, int lvl) {
+		super(name, health, dam, def, spd, jH, sS, lvl);
 		setWeapon(new Weapon("Standard", 5, 5));
 	}
 

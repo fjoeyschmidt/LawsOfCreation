@@ -43,11 +43,11 @@ public class MovementTest {
 	
 	@Before
 	public void setUp() {
-		e = new Enemy("enemy", ehealth, edamage, edefense, espeed, ejumpHeight, sS);
+		e = new Enemy("enemy", ehealth, edamage, edefense, espeed, ejumpHeight, sS, 1);
 		e.getProperties().setHeight(eheight);
 		e.getProperties().setWidth(ewidth);
 		e.setCharacterLocation(enemyLocation);
-		p = new Enemy("player", phealth, pdamage, pdefense, pspeed, pjumpHeight, sS);
+		p = new Enemy("player", phealth, pdamage, pdefense, pspeed, pjumpHeight, sS, 1);
 		p.getProperties().setHeight(pheight);
 		p.getProperties().setWidth(pwidth);
 		p.setCharacterLocation(playerLocation);

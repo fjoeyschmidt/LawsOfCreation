@@ -18,8 +18,10 @@ public class Combat {
 		for (Character check : entities) {
 			if ( !(check == c) ) {
 				int damage = c.getWeapon().getWeaponDamage() + c.getDamage() - check.getDefense();
-				//true for weapon hit damage character
-				if ( Space.checkOverlap(attackGrid, Space.getCharacterSpace(check)) ) {
+				
+				if ( check instanceof Enemy && c instanceof Enemy) {
+					damage = 0;
+				} else if ( Space.checkOverlap(attackGrid, Space.getCharacterSpace(check)) ) {
 					if ( damage < 0 ) {
 						damage = 0;
 					}
@@ -29,6 +31,7 @@ public class Combat {
 						}
 					}
 					check.setCurrentHealth(check.getCurrentHealth() - damage);
+					check.setIsFlinching(true);
 				}
 			}
 		}

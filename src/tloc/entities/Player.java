@@ -17,11 +17,13 @@ public class Player extends Character implements LevelUp {
 	private static final int startingSpeed = 2;
 	private static final int startingJumpHeight = 100;
 	private static final String SpriteSize = "51x61";
-	private List<Ability> abilities = new ArrayList<Ability>();
+	private static final int startingLevel = 1;
 	private int exp, expToLvl; //total experience points and number of points needed to lvl up
+
 	
 	public Player() {
-		super("Ridley", startingHealth, startingDamage, startingDefense, startingSpeed, startingJumpHeight, SpriteSize);
+		super("Ridley", startingHealth, startingDamage, startingDefense, startingSpeed,
+				startingJumpHeight, SpriteSize, startingLevel);
 		setLevel(1);
 		setExp(0);
 		setExpToLvl(10);
@@ -43,8 +45,7 @@ public class Player extends Character implements LevelUp {
 
 	@Override
 	public void levelUp(LevelUpEnum statUp) {
-		setLevel(this.getLevel() + 1);
-		setExpToLvl(expToLvl * 2);
+		
 		if (statUp == LevelUpEnum.HEALTH) {
 			this.getProperties().setMaxHealth(this.getProperties().getMaxHealth() + 5);
 		}
@@ -61,13 +62,7 @@ public class Player extends Character implements LevelUp {
 	}
 	
 	//Getters and Setters
-	public List<Ability> getAbilities() {
-		return abilities;
-	}
-
-	public void setAbilities(List<Ability> abilities) {
-		this.abilities = abilities;
-	}
+	
 
 	public static String getSpritesize() {
 		return SpriteSize;
@@ -88,5 +83,7 @@ public class Player extends Character implements LevelUp {
 	public void setExpToLvl(int expToLvl) {
 		this.expToLvl = expToLvl;
 	}
+	
+	
 	
 }

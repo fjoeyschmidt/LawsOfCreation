@@ -15,8 +15,9 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import tloc.entities.Controls;
-import tloc.entities.GameState;
+import tloc.entities.OurGameState;
 import tloc.entities.Character;
+import tloc.entities.Player;
 
 /**
  * GameStateView draws the GUI.
@@ -29,7 +30,7 @@ public class GameStateView extends BasicGameState {
 		this.stateID = stateID;
 	}
 
-	private static GameState game;
+	private static OurGameState game;
 	private final int HEIGHT = 600;
 	private static List<Character> entities;
 	private Map<Character, Animation> sprites = new HashMap<Character, Animation>();
@@ -42,7 +43,7 @@ public class GameStateView extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		trueTypeFont = new TrueTypeFont(font, true);
-		game = new GameState();
+		game = new OurGameState();
 		Controls.newControls();
 
 		//get image for area
@@ -95,9 +96,9 @@ public class GameStateView extends BasicGameState {
 		if( game.isGameOver() ) {
 			state.enterState(RunGame.GAMEOVERSTATE);
 		}
-		if ( game.getPlayer().checkLvlUp() ) {
-			state.enterState(RunGame.LEVELUPSTATE);
-		}
+//		if ( game.getPlayer().checkLvlUp() ) {
+//			state.enterState(RunGame.LEVELUPSTATE);
+//		}
 	}
 
 	//update gamestate method
@@ -113,6 +114,8 @@ public class GameStateView extends BasicGameState {
 
 		//updates game state
 		game.update();
+		
+		
 	}
 
 	@Override

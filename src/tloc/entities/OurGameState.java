@@ -10,7 +10,7 @@ import java.util.Observable;
  * Static update method 
  */
 
-public class GameState extends Observable {
+public class OurGameState extends Observable {
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private int maxEnemies;
@@ -20,7 +20,7 @@ public class GameState extends Observable {
 	private List<Character> entities = new ArrayList<Character>(); //a list of all characters currently in play
 
 	//constructor
-	public GameState() {
+	public OurGameState() {
 		currentArea = new SubArea(330, 760);
 		player = new Player();
 		player.setCharacterLocation(new Location(100, 300));
@@ -38,11 +38,23 @@ public class GameState extends Observable {
 		
 		//for each Character in play (get AI actions) perform action
 		for (Character c : entities) {
+			
 			if (c instanceof AI) {
 				if( c instanceof EnemyAI) {
 					((Enemy) c).action(player);
+				}	
+			}
+			if(c.isFlinching()) {
+				if(c.getFlinchCounter() == 0) {
+					c.setFlinchCounter(1);
 				}
-			} if (c.isBlocking()) {
+				if(c.getFlinchCounter() < 10) {
+					c.setFlinchCounter(c.getFlinchCounter() + 1);
+				} else {
+					c.setIsFlinching(false);
+					c.setFlinchCounter(0);
+				}
+			} else if (c.isBlocking()) {
 				Combat.block(c);
 			} else if (c.isAttacking()) {
 				if (c.getAttackCounter() == 0) {
@@ -75,6 +87,7 @@ public class GameState extends Observable {
 			Character c = iter.next();
 			if (c.isDead()) {
 				player.addExp(c.getLevel());
+				System.out.println(player.getExp());
 				iter.remove();
 			}
 		}

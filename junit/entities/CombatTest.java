@@ -6,13 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import tloc.entities.Enemy;
-import tloc.entities.GameState;
+import tloc.entities.OurGameState;
 import tloc.entities.Location;
 import tloc.entities.Player;
 import tloc.entities.Weapon;
 
 public class CombatTest {
-	private GameState game;
+	private OurGameState game;
 	private Player player;
 	private int playerHeight = 10, playerWidth = 10;
 	private Enemy enemy1;
@@ -21,14 +21,14 @@ public class CombatTest {
 
 	@Before
 	public void setUp() {
-		game = new GameState();
+		game = new OurGameState();
 		playerWeapon = new Weapon("Starter", 5, 5);
 		player = new Player();
 		game.setPlayer(player);
 		game.getPlayer().setWeapon(playerWeapon);
 		game.getPlayer().getProperties().setHeight(playerHeight);
 		game.getPlayer().getProperties().setWidth(playerWidth);
-		enemy1 = new Enemy("enemy1", startingHealth, startingDamage, startingDefense, 1, 20, "60x90");
+		enemy1 = new Enemy("enemy1", startingHealth, startingDamage, startingDefense, 1, 20, "60x90", 1);
 		enemy1.getProperties().setHeight(game.getPlayer().getProperties().getHeight());
 		enemy1.getProperties().setWidth(game.getPlayer().getProperties().getWidth());
 		game.addCharacter(enemy1);
