@@ -4,7 +4,7 @@ package tloc.entities;
  * the player will visit.
  */
 
-public abstract class Area implements IDisplayable {
+public class Area implements IDisplayable {
 	private Location grid[][];
 	private static int height, width;
 	
@@ -44,5 +44,10 @@ public abstract class Area implements IDisplayable {
 
 	public void setGrid(Location grid[][]) {
 		this.grid = grid;
+	}
+	
+	@Override
+	public SpriteId getSpriteId() {
+		return SpriteId.LAND;
 	}
 }

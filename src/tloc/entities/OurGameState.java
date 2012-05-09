@@ -23,7 +23,7 @@ public class OurGameState extends Observable {
 	
 	//constructor
 	public OurGameState() {
-		currentArea = new SubArea(330, 760);
+		currentArea = new Area(330, 760);
 		player = new Player();
 		player.setCharacterLocation(new Location(100, 300));
 		setPlayer(player);
@@ -90,7 +90,6 @@ public class OurGameState extends Observable {
 			Character c = iter.next();
 			if (c.isDead()) {
 				player.addExp(c.getLevel());
-				System.out.println(player.getExp());
 				iter.remove();
 			}
 		}

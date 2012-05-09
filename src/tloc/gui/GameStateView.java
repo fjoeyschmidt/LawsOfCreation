@@ -14,11 +14,8 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import tloc.entities.Controls;
 import tloc.entities.OurGameState;
 import tloc.entities.Character;
-import tloc.entities.Player;
-import tloc.entities.Structure;
 
 /**
  * GameStateView draws the GUI.
@@ -34,9 +31,8 @@ public class GameStateView extends BasicGameState {
 	private static OurGameState game;
 	private final int HEIGHT = 600;
 	private static List<Character> entities;
-	private static List<Structure> things;
 	private Map<Character, Animation> sprites = new HashMap<Character, Animation>();
-	private Image area, structure;
+	private Image area;
 	private Animation sprite;
 	private Font font = new Font("Verdana", Font.BOLD, 40);
 	private TrueTypeFont trueTypeFont;
@@ -73,7 +69,6 @@ public class GameStateView extends BasicGameState {
 		
 		//for each character draw their sprite
 		entities = game.getEntityList();
-		things = game.getStructureList();
 		for (Character currentChar : entities) {
 			if (currentChar.isJumping()) {
 				String resName = GameStateView.class.getPackage().getName().replace('.', '/') + "/res/" +
@@ -94,18 +89,11 @@ public class GameStateView extends BasicGameState {
 						HEIGHT - currentChar.getProperties().getHeight() - currentChar.getCharacterLocation().getyLocation());
 			}
 		}
-//		for (Structure currentStruc : things) {
-//			structure = SpriteFactory.getStructureSprite(currentStruc);
-//			structure.draw(currentStruc.getStructureLocation().getxLocation(), currentStruc.getStructureLocation().getyLocation());
-//		}
 		
 		//if Player dies open Game Over screen
 		if( game.isGameOver() ) {
 			state.enterState(RunGame.GAMEOVERSTATE);
 		}
-//		if ( game.getPlayer().checkLvlUp() ) {
-//			state.enterState(RunGame.LEVELUPSTATE);
-//		}
 	}
 
 	//update gamestate method

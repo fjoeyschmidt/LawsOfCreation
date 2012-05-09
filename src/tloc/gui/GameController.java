@@ -1,14 +1,14 @@
 package tloc.gui;
 
 import org.newdawn.slick.Input;
+
 import tloc.entities.Command;
 import tloc.entities.CommandHandler;
-import tloc.entities.Controls;
 import tloc.entities.OurGameState;
 import tloc.entities.LevelUpEnum;
 
 /**
- * @author fschmidt
+ * 
  *
  */
 public class GameController {

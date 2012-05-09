@@ -8,12 +8,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import tloc.entities.Area;
 import tloc.entities.Character;
 import tloc.entities.Location;
 import tloc.entities.Movement;
 import tloc.entities.Player;
 import tloc.entities.Space;
-import tloc.entities.SubArea;
 
 public class SpaceTest {
 	private Space space1, space2;
@@ -74,7 +74,7 @@ public class SpaceTest {
 		p.setyDirection(0);
 		for (int i = 0; i < steps; i++) {
 			Space.checkCollision(p.getSpaceTaken(), wall.getSpaceTaken());
-			Movement.moveCharacter(p, new SubArea(100, 100), entities);
+			Movement.moveCharacter(p, new Area(100, 100), entities);
 		}
 		assertTrue(Location.sameLocation(p.getCharacterLocation(),
 				new Location(18, 30)));
@@ -85,7 +85,7 @@ public class SpaceTest {
 		p.setyDirection(0);
 		for (int i = 0; i < steps; i++) {
 			Space.checkCollision(p.getSpaceTaken(), wall.getSpaceTaken());
-			Movement.moveCharacter(p, new SubArea(100,100), entities);
+			Movement.moveCharacter(p, new Area(100,100), entities);
 		}
 		assertTrue(Location.sameLocation(p.getCharacterLocation(),
 				new Location(41, 30)));
@@ -96,7 +96,7 @@ public class SpaceTest {
 		p.setyDirection(1);
 		for (int i = 0; i < steps; i++) {
 			Space.checkCollision(p.getSpaceTaken(), wall.getSpaceTaken());
-			Movement.moveCharacter(p, new SubArea(100,100), entities);
+			Movement.moveCharacter(p, new Area(100,100), entities);
 		}
 		assertTrue(Location.sameLocation(p.getCharacterLocation(),
 				new Location(30, 18)));
@@ -107,7 +107,7 @@ public class SpaceTest {
 		p.setyDirection(-1);
 		for (int i = 0; i < steps; i++) {
 			Space.checkCollision(p.getSpaceTaken(), wall.getSpaceTaken());
-			Movement.moveCharacter(p, new SubArea(100,100), entities);
+			Movement.moveCharacter(p, new Area(100,100), entities);
 		}
 		assertTrue(Location.sameLocation(p.getCharacterLocation(),
 				new Location(30, 41)));

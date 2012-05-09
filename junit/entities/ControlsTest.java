@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.newdawn.slick.Input;
 
 import tloc.entities.Command;
-import tloc.entities.Controls;
 import tloc.entities.Player;
+import tloc.gui.Controls;
 
 public class ControlsTest {
 	private int s, w, a, d, space;

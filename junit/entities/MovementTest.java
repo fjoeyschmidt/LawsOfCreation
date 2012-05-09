@@ -8,12 +8,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import tloc.entities.Area;
 import tloc.entities.Character;
 import tloc.entities.Enemy;
 import tloc.entities.Location;
 import tloc.entities.Movement;
 import tloc.entities.Space;
-import tloc.entities.SubArea;
 
 public class MovementTest {
 	
@@ -62,7 +62,7 @@ public class MovementTest {
 		e.setyDirection(1);
 		entities.add(p);
 		entities.add(e);
-		Movement.moveCharacter(e, new SubArea(100, 100), entities);
+		Movement.moveCharacter(e, new Area(100, 100), entities);
 		
 		assertTrue(e.isMoving());
 		assertTrue(Location.sameLocation(new Location(4, 4),
@@ -84,7 +84,7 @@ public class MovementTest {
 		e.jump();
 		assertTrue(e.isJumping());
 		while (e.isJumping()) {
-			e.move(new SubArea(100, 100), entities);
+			e.move(new Area(100, 100), entities);
 		}
 		assertTrue(Location.sameLocation(enemyLocation, e.getCharacterLocation()));
 		assertFalse(e.isJumping());
@@ -94,7 +94,7 @@ public class MovementTest {
 		e.jump();
 		assertTrue(e.isJumping());
 		while (e.isJumping()) {
-			e.move(new SubArea(100, 100), entities);
+			e.move(new Area(100, 100), entities);
 			counter++;
 			e.setyDirection(1);
 		}

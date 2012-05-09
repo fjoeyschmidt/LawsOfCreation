@@ -1,5 +1,6 @@
 package tloc.entities;
 
+
 public interface EnemyAI extends AI {
 	static final float fiftyPercent = 0.5f;
 	static final float fourtyPercent = 0.4f;

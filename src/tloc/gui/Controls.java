@@ -1,9 +1,12 @@
-package tloc.entities;
+package tloc.gui;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.newdawn.slick.Input;
+
+import tloc.entities.Command;
+
 
 public class Controls {
 	private static final Map<Command, Integer> controlMap = new HashMap<>();

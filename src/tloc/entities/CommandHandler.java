@@ -1,5 +1,6 @@
 package tloc.entities;
 
+
 public abstract class CommandHandler {
 	
 	public static void handleCommand(Command command, Character c) {

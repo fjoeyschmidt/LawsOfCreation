@@ -21,7 +21,7 @@ public class Combat {
 				
 				if ( check instanceof Enemy && c instanceof Enemy) {
 					damage = 0;
-				} else if ( Space.checkOverlap(attackGrid, Space.getCharacterSpace(check)) ) {
+				} else if ( Space.checkOverlap(attackGrid, Space.getCharacterSpace(check)) && !check.isJumping() ) {
 					if ( damage < 0 ) {
 						damage = 0;
 					}

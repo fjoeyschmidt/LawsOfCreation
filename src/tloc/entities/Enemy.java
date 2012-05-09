@@ -2,6 +2,7 @@ package tloc.entities;
 
 import java.util.Random;
 
+
 /** Enemy class.
  * Methods for combat.
  */
